@@ -1,0 +1,1 @@
+Remove priority from AbstractCardAI. Introduce it into a static structure that can be queried.

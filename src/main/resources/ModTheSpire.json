@@ -1,0 +1,10 @@
+{
+  "modid": "${project.artifactId}",
+  "name": "SlayAI",
+  "author_list": ["Mikhail"],
+  "description": "AI that slays the spire",
+  "version": "1.0",
+  "mts_version": "3.30.0",
+  "sts_version": "12-18-2022",
+  "dependencies": ["basemod"]
+}
