@@ -1,9 +1,9 @@
 package util;
 
 import cards.interfaces.AbstractCardAI;
-import cards.ironclad.BashAI;
-import cards.ironclad.DefendAI;
-import cards.ironclad.StrikeAI;
+import cards.ironclad.starter.BashAI;
+import cards.ironclad.starter.DefendAI;
+import cards.ironclad.starter.StrikeAI;
 import dungeon.DungeonState;
 import monsters.AbstractMonsterAI;
 import player.PlayerAI;
@@ -41,12 +41,4 @@ public class IroncladUtil {
         return new DungeonState(player, deck, monsters);
     }
 
-    public static DungeonState getLouseState() {
-        PlayerAI player = getStarterIronclad();
-        ArrayList<AbstractCardAI> deck = getStarterIroncladDeck();
-        ArrayList<AbstractMonsterAI> monsters = new ArrayList<>();
-        monsters.add(MonsterUtil.getRedLouse());
-        monsters.add(MonsterUtil.getGreenLouse());
-        return new DungeonState(player, deck, monsters);
-    }
 }

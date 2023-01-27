@@ -1,5 +1,7 @@
-package monsters.act1;
+package monsters.act1.regular;
 
+import dungeon.DungeonState;
+import monsters.act1.interfaces.LouseAI;
 import player.PlayerAI;
 import powers.PowerAI.PowerTypeAI;
 
@@ -16,23 +18,19 @@ public class GreenLouseAI extends LouseAI {
     }
 
     @Override
-    public void getNextMove() {
+    public void getNextMove(DungeonState state) {
         int nextMove;
-        while(true) {
-            nextMove = r.nextInt(100);
+        while (true) {
+            nextMove = rand.nextInt(100);
             if (nextMove <= 25) {
                 // Can't use Weak three times in a row
-                if (getCurrentMove() == WEAK &&
-                        moveHistory.size() > 1 &&
-                        moveHistory.get(moveHistory.size() - 2) == WEAK) {
+                if (lastTwoMovesEqual(WEAK)) {
                     continue;
                 }
                 moveHistory.add(WEAK);
             } else {
                 // Can't use Bite three times in a row
-                if (getCurrentMove() == BITE &&
-                        moveHistory.size() > 1 &&
-                        moveHistory.get(moveHistory.size() - 2) == BITE) {
+                if (lastTwoMovesEqual(BITE)) {
                     continue;
                 }
                 moveHistory.add(BITE);
@@ -42,10 +40,11 @@ public class GreenLouseAI extends LouseAI {
     }
 
     @Override
-    public void playMove(PlayerAI player) {
+    public void playMove(DungeonState state) {
+        PlayerAI player = state.getPlayer();
         switch (getCurrentMove()) {
             case BITE:
-                player.takeDamage(player, bonusDamage);
+                player.takeDamage(this, bonusDamage);
                 break;
             case WEAK:
                 player.addPower(PowerTypeAI.WEAK, 2);

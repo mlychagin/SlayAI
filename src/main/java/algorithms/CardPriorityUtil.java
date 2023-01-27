@@ -2,11 +2,76 @@ package algorithms;
 
 import cards.interfaces.AbstractCardAI;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.HashSet;
 
 import static util.DebugStaticVariables.DEBUG_GET_MOVE_SET;
 
 public class CardPriorityUtil {
+    public static Comparator<AbstractCardAI> cardComparator = new CardComparator();
+
+    private static void addMove(HashSet<SortedCardList> master, SortedCardList hand, SortedCardList current, int energy) {
+        ArrayList<AbstractCardAI> handCards = hand.getCards();
+        if (energy == 0) {
+            master.add(new SortedCardList(current));
+            return;
+        }
+        for (AbstractCardAI handCard : handCards) {
+            if (energy >= handCard.getEnergyCost()) {
+                return;
+            }
+        }
+        master.add(new SortedCardList(current));
+    }
+
+    private static void addCardRecursive(HashSet<SortedCardList> master, SortedCardList hand, SortedCardList current, int index, int energy) {
+        ArrayList<AbstractCardAI> handCards = hand.getCards();
+        addMove(master, hand, current, energy);
+        for (int i = index; i < handCards.size(); i++) {
+            AbstractCardAI card = handCards.get(i);
+            int cardEnergyCost = card.getEnergyCost();
+            if (energy < cardEnergyCost) {
+                continue;
+            }
+
+            // Pick the card
+            current.addCard(card);
+            addCardRecursive(master, hand, current, i + 1, energy - cardEnergyCost);
+            current.removeLastCard();
+        }
+    }
+
+    public static HashSet<ArrayList<AbstractCardAI>> getMoveSet(ArrayList<AbstractCardAI> cards, int energy) {
+        SortedCardList hand = new SortedCardList(cards);
+        HashSet<ArrayList<AbstractCardAI>> result = new HashSet<>();
+        HashSet<SortedCardList> sortedOrder = new HashSet<>();
+        hand.prioritySortCards();
+        addCardRecursive(sortedOrder, hand, new SortedCardList(), 0, energy);
+
+        for (SortedCardList move : sortedOrder) {
+            result.add(move.getCards());
+        }
+
+        if (DEBUG_GET_MOVE_SET) {
+            for (ArrayList<AbstractCardAI> play : result) {
+                ArrayList<AbstractCardAI> debugSet = new ArrayList<>(cards);
+                int tmpEnergy = 0;
+                for (AbstractCardAI card : play) {
+                    tmpEnergy += card.getEnergyCost();
+                    if (!debugSet.contains(card)) {
+                        throw new RuntimeException("Invalid Play");
+                    }
+                    debugSet.remove(card);
+                }
+                if (tmpEnergy > energy) {
+                    throw new RuntimeException("Invalid Play");
+                }
+            }
+        }
+        return result;
+    }
+
     public static class SortedCardList {
         private final ArrayList<AbstractCardAI> cards;
 
@@ -64,74 +129,10 @@ public class CardPriorityUtil {
         }
     }
 
-    public static Comparator<AbstractCardAI> cardComparator = new CardComparator();
-
     private static class CardComparator implements Comparator<AbstractCardAI> {
         @Override
         public int compare(AbstractCardAI o1, AbstractCardAI o2) {
             return Integer.compare(o1.getPriority(), o2.getPriority());
         }
-    }
-
-    private static void addMove(HashSet<SortedCardList> master, SortedCardList hand, SortedCardList current, int energy) {
-        ArrayList<AbstractCardAI> handCards = hand.getCards();
-        if (energy == 0) {
-            master.add(new SortedCardList(current));
-            return;
-        }
-        for (AbstractCardAI handCard : handCards) {
-            if (energy >= handCard.getEnergyCost()) {
-                return;
-            }
-        }
-        master.add(new SortedCardList(current));
-    }
-
-    private static void addCardRecursive(HashSet<SortedCardList> master, SortedCardList hand, SortedCardList current, int index, int energy) {
-        ArrayList<AbstractCardAI> handCards = hand.getCards();
-        addMove(master, hand, current, energy);
-        //master.add(new SortedCardList(current));
-        for (int i = index; i < handCards.size(); i++) {
-            AbstractCardAI card = handCards.get(i);
-            int cardEnergyCost = card.getEnergyCost();
-            if (energy < cardEnergyCost) {
-                continue;
-            }
-
-            // Pick the card
-            current.addCard(card);
-            addCardRecursive(master, hand, current, i + 1, energy - cardEnergyCost);
-            current.removeLastCard();
-        }
-    }
-
-    public static HashSet<ArrayList<AbstractCardAI>> getMoveSet(ArrayList<AbstractCardAI> cards, int energy) {
-        SortedCardList hand = new SortedCardList(cards);
-        HashSet<ArrayList<AbstractCardAI>> result = new HashSet<>();
-        HashSet<SortedCardList> sortedOrder = new HashSet<>();
-        hand.prioritySortCards();
-        addCardRecursive(sortedOrder, hand, new SortedCardList(), 0, energy);
-
-        for (SortedCardList move : sortedOrder) {
-            result.add(move.getCards());
-        }
-
-        if (DEBUG_GET_MOVE_SET) {
-            for (ArrayList<AbstractCardAI> play : result) {
-                ArrayList<AbstractCardAI> debugSet = new ArrayList<>(cards);
-                int tmpEnergy = 0;
-                for (AbstractCardAI card : play) {
-                    tmpEnergy += card.getEnergyCost();
-                    if (!debugSet.contains(card)) {
-                        throw new RuntimeException("Invalid Play");
-                    }
-                    debugSet.remove(card);
-                }
-                if (tmpEnergy > energy) {
-                    throw new RuntimeException("Invalid Play");
-                }
-            }
-        }
-        return result;
     }
 }

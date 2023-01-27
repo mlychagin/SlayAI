@@ -1,14 +1,14 @@
 package interactions;
 
-import util.IroncladUtil;
-import util.MonsterUtil;
 import cards.interfaces.AbstractCardAI;
-import cards.ironclad.BashAI;
-import cards.ironclad.StrikeAI;
+import cards.ironclad.starter.BashAI;
+import cards.ironclad.starter.StrikeAI;
 import dungeon.CopyableRandom;
 import dungeon.DungeonState;
 import org.junit.Assert;
 import org.junit.Test;
+import util.IroncladUtil;
+import util.MonsterUtil;
 
 import java.util.ArrayList;
 
@@ -54,7 +54,7 @@ public class DungeonStateTest {
         DungeonState state = IroncladUtil.getJawWormState();
 
         state.endTurn();
-        Assert.assertEquals(state.getPlayer().getHealth(), 80  - 11);
+        Assert.assertEquals(state.getPlayer().getHealth(), 80 - 11);
         Assert.assertEquals(state.getHand().size(), 5);
     }
 

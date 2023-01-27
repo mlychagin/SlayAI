@@ -1,6 +1,7 @@
-package monsters.act1;
+package monsters.act1.regular;
 
 import com.megacrit.cardcrawl.monsters.exordium.JawWorm;
+import dungeon.DungeonState;
 import monsters.AbstractMonsterAI;
 import player.PlayerAI;
 import powers.PowerAI.PowerTypeAI;
@@ -30,29 +31,27 @@ public class JawWormAI extends AbstractMonsterAI {
     }
 
     @Override
-    public void getNextMove() {
+    public void getNextMove(DungeonState state) {
         int nextMove;
-        while(true) {
-            nextMove = r.nextInt(100);
+        while (true) {
+            nextMove = rand.nextInt(100);
             if (nextMove <= 45) {
                 // Can't use Bellow twice in a row
-                if (getCurrentMove() == BELLOW) {
+                if (lastMoveEquals(BELLOW)) {
                     continue;
                 }
                 moveHistory.add(BELLOW);
                 break;
             } else if (nextMove <= 75) {
                 // Can't use Thrash three times in a row
-                if (getCurrentMove() == THRASH &&
-                        moveHistory.size() > 1 &&
-                        moveHistory.get(moveHistory.size() - 2) == THRASH) {
+                if (lastTwoMovesEqual(THRASH)) {
                     continue;
                 }
                 moveHistory.add(THRASH);
                 break;
             } else {
                 // Can't use Chomp twice in a row
-                if (getCurrentMove() == CHOMP) {
+                if (lastMoveEquals(CHOMP)) {
                     continue;
                 }
                 moveHistory.add(CHOMP);
@@ -62,17 +61,18 @@ public class JawWormAI extends AbstractMonsterAI {
     }
 
     @Override
-    public void playMove(PlayerAI player) {
+    public void playMove(DungeonState state) {
+        PlayerAI player = state.getPlayer();
         switch (getCurrentMove()) {
             case CHOMP:
-                player.takeDamage(player, 11);
+                player.takeDamage(this, 11);
                 break;
             case BELLOW:
                 addPower(PowerTypeAI.STRENGTH, 3);
                 addBlock(6);
                 break;
             case THRASH:
-                player.takeDamage(player, 7);
+                player.takeDamage(this, 7);
                 addBlock(5);
                 break;
         }

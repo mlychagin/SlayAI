@@ -1,13 +1,6 @@
 package powers;
 
 public class PowerAI {
-    public enum PowerTypeAI {
-        STRENGTH,
-        VULNERABLE,
-        WEAK,
-        CURL_UP
-    }
-
     protected PowerTypeAI type;
     protected int amount;
 
@@ -39,5 +32,17 @@ public class PowerAI {
 
     public PowerAI clone() {
         return new PowerAI(this);
+    }
+
+    public enum PowerTypeAI {
+        STRENGTH,
+        VULNERABLE,
+        WEAK,
+        CURL_UP,
+        PRE_RITUAL,
+        RITUAL,
+        FRAIL,
+        ANGRY,
+        ENTANGLE
     }
 }

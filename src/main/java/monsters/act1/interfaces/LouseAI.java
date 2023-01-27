@@ -1,10 +1,9 @@
-package monsters.act1;
+package monsters.act1.interfaces;
 
 import com.megacrit.cardcrawl.monsters.exordium.LouseNormal;
 import dungeon.CopyableRandom;
 import monsters.AbstractCreatureAI;
 import monsters.AbstractMonsterAI;
-import player.PlayerAI;
 import powers.PowerAI;
 import powers.PowerAI.PowerTypeAI;
 
@@ -16,7 +15,7 @@ public abstract class LouseAI extends AbstractMonsterAI {
     public LouseAI(LouseNormal monster) {
         super(monster);
         //Todo: Figure out the exact number when monster attacks
-        bonusDamage = 5 + r.nextInt(3);
+        bonusDamage = 5 + rand.nextInt(3);
     }
 
     protected LouseAI(LouseAI monster) {
@@ -26,14 +25,14 @@ public abstract class LouseAI extends AbstractMonsterAI {
 
     public LouseAI() {
         super();
-        this.r = new CopyableRandom();
-        this.health = 10 + r.nextInt(6);
+        this.rand = new CopyableRandom();
+        this.health = 10 + rand.nextInt(6);
         this.block = 0;
-        this.bonusDamage = 5 + r.nextInt(3);
+        this.bonusDamage = 5 + rand.nextInt(3);
         this.powers = new ArrayList<>();
         this.moveHistory = new ArrayList<>();
         addPower(PowerTypeAI.CURL_UP, 1);
-        getNextMove();
+        getNextMove(null);
     }
 
     public int getBonusDamage() {
@@ -44,10 +43,10 @@ public abstract class LouseAI extends AbstractMonsterAI {
     public void takeDamage(AbstractCreatureAI source, int value) {
         super.takeDamage(source, value);
         PowerAI power;
-        for(int i = 0; i < powers.size(); i++) {
+        for (int i = 0; i < powers.size(); i++) {
             power = powers.get(i);
             if (power.getType() == PowerTypeAI.CURL_UP) {
-                addBlock(3 + r.nextInt(5));
+                addBlock(3 + rand.nextInt(5));
                 powers.remove(i);
                 return;
             }

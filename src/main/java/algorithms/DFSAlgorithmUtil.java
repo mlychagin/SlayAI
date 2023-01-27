@@ -5,7 +5,7 @@ import dungeon.DungeonState;
 import java.util.ArrayList;
 
 public class DFSAlgorithmUtil {
-    private static int MAX_DEPTH = 10;
+    private static final int MAX_DEPTH = 10;
 
     public static ArrayList<DungeonState> dungeonStateDFS(DungeonState state) {
         ArrayList<DungeonState> bestPath = new ArrayList<>();

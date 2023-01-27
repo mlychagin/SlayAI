@@ -16,7 +16,7 @@ import java.util.ArrayList;
 @SpireInitializer
 public class PlayerTurn implements PostDrawSubscriber, OnStateChangeSubscriber, ISubscriber {
     public static final Logger logger = LogManager.getLogger(PlayerTurn.class.getName());
-    private ArrayList<AbstractCard> hand = new ArrayList<>();
+    private final ArrayList<AbstractCard> hand = new ArrayList<>();
 
     public PlayerTurn() {
         CommunicationMod.subscribe(this);

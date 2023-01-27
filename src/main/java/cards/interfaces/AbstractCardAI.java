@@ -4,23 +4,20 @@ import java.util.HashMap;
 import java.util.Objects;
 
 public abstract class AbstractCardAI {
-    public enum CardId {
-        BASH,
-        STRIKE,
-        DEFEND
-    }
-
-    protected boolean upgraded;
-    protected int cost;
-    protected CardId cardId;
-
     public static HashMap<CardId, Integer> cardPriority = new HashMap<>();
 
     static {
         cardPriority.put(CardId.BASH, 40);
         cardPriority.put(CardId.STRIKE, 60);
         cardPriority.put(CardId.DEFEND, 70);
+        cardPriority.put(CardId.SLIMED, 99);
+        cardPriority.put(CardId.ANGER, 60);
     }
+
+    protected boolean upgraded;
+    protected int cost;
+    protected CardId cardId;
+    protected boolean exhaust;
 
     public CardId getCardId() {
         return cardId;
@@ -34,6 +31,10 @@ public abstract class AbstractCardAI {
         return cost;
     }
 
+    public boolean isExhaust() {
+        return exhaust;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -45,5 +46,13 @@ public abstract class AbstractCardAI {
     @Override
     public int hashCode() {
         return Objects.hash(upgraded, cost, cardId);
+    }
+
+    public enum CardId {
+        BASH,
+        STRIKE,
+        DEFEND,
+        SLIMED,
+        ANGER
     }
 }

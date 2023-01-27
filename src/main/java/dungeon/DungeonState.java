@@ -3,7 +3,10 @@ package dungeon;
 import cards.interfaces.AbstractCardAI;
 import cards.interfaces.AttackCardAI;
 import cards.interfaces.PlayerCardAI;
-import cards.ironclad.BashAI;
+import cards.interfaces.VoidCardAI;
+import cards.ironclad.starter.BashAI;
+import cards.ironclad.starter.DefendAI;
+import cards.ironclad.starter.StrikeAI;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.cards.CardGroup;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
@@ -13,7 +16,7 @@ import com.megacrit.cardcrawl.monsters.MonsterGroup;
 import com.megacrit.cardcrawl.monsters.exordium.JawWorm;
 import com.megacrit.cardcrawl.rooms.AbstractRoom;
 import monsters.AbstractMonsterAI;
-import monsters.act1.JawWormAI;
+import monsters.act1.regular.JawWormAI;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import player.PlayerAI;
@@ -27,14 +30,14 @@ import static algorithms.CardPriorityUtil.getMoveSet;
 public class DungeonState {
     public static final Logger logger = LogManager.getLogger(DungeonState.class.getName());
     public static int STATES_CONSIDERED = 0;
-    private ArrayList<AbstractMonsterAI> monsters;
     private final PlayerAI player;
-    private ArrayList<AbstractCardAI> masterDeck;
+    private final ArrayList<AbstractCardAI> masterDeck;
+    private final ArrayList<AbstractCardAI> hand;
+    private final ArrayList<AbstractCardAI> exhaustPile;
+    private final ArrayList<AbstractCardAI> cardsPlayed = new ArrayList<>();
+    private ArrayList<AbstractMonsterAI> monsters;
     private ArrayList<AbstractCardAI> drawPile;
-    private ArrayList<AbstractCardAI> hand;
     private ArrayList<AbstractCardAI> discardPile;
-    private ArrayList<AbstractCardAI> exhaustPile;
-    private ArrayList<AbstractCardAI> cardsPlayed = new ArrayList<>();
     private CopyableRandom random;
 
     public DungeonState() {
@@ -97,16 +100,16 @@ public class DungeonState {
 
     private ArrayList<AbstractCardAI> sanitizeCardList(CardGroup cardGroup) {
         ArrayList<AbstractCard> cards = cardGroup.group;
-        ArrayList<AbstractCardAI> sanitizedCards = new ArrayList<AbstractCardAI>();
+        ArrayList<AbstractCardAI> sanitizedCards = new ArrayList<>();
         for (AbstractCard card : cards) {
             if (card.name.equals("Bash")) {
                 sanitizedCards.add(new BashAI());
             }
             if (card.name.equals("Defend")) {
-                sanitizedCards.add(new BashAI());
+                sanitizedCards.add(new DefendAI());
             }
             if (card.name.equals("Strike")) {
-                sanitizedCards.add(new BashAI());
+                sanitizedCards.add(new StrikeAI());
             }
         }
         return sanitizedCards;
@@ -122,6 +125,22 @@ public class DungeonState {
 
     public ArrayList<AbstractCardAI> getHand() {
         return hand;
+    }
+
+    public ArrayList<AbstractCardAI> getDiscardPile() {
+        return discardPile;
+    }
+
+    public void addCardToDiscardPile(AbstractCardAI card) {
+        discardPile.add(card);
+    }
+
+    public void exhaustCard(AbstractCardAI card) {
+        if (!card.isExhaust()) {
+            return;
+        }
+        hand.remove(card);
+        exhaustPile.add(card);
     }
 
     public ArrayList<DungeonState> getPossibleStates() {
@@ -149,13 +168,19 @@ public class DungeonState {
                             continue;
                         }
                         newState = state.clone();
-                        ((AttackCardAI) card).playCard(newState.player, newState.monsters.get(i));
+                        ((AttackCardAI) card).playCard(newState, newState.monsters.get(i));
+                        newState.exhaustCard(card);
                         output.add(newState);
                     }
-                }
-                if (card instanceof PlayerCardAI) {
+                } else if (card instanceof PlayerCardAI) {
                     newState = state.clone();
                     ((PlayerCardAI) card).playCard(newState.player);
+                    newState.exhaustCard(card);
+                    output.add(newState);
+                } else if (card instanceof VoidCardAI) {
+                    newState = state.clone();
+                    ((VoidCardAI) card).playCard();
+                    newState.exhaustCard(card);
                     output.add(newState);
                 }
             }
@@ -184,6 +209,7 @@ public class DungeonState {
 
     public void beginTurn() {
         player.resetBlock();
+        player.endTurnPower();
         for (int i = 0; i < 5; i++) {
             drawCard();
         }
@@ -193,9 +219,10 @@ public class DungeonState {
         discardPile.addAll(hand);
         hand.clear();
         for (AbstractMonsterAI monster : monsters) {
-            monster.playTurn(player);
+            if (!monster.isDead()) {
+                monster.playTurn(this);
+            }
         }
-        player.endTurnPower();
         beginTurn();
     }
 

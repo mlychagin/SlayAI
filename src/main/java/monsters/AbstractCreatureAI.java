@@ -1,7 +1,6 @@
 package monsters;
 
 import dungeon.CopyableRandom;
-import player.PlayerAI;
 import powers.PowerAI;
 import powers.PowerAI.PowerTypeAI;
 
@@ -9,12 +8,13 @@ import java.util.ArrayList;
 
 public abstract class AbstractCreatureAI {
     protected int health;
+    protected int maxHealth;
     protected int block;
     protected ArrayList<PowerAI> powers = new ArrayList<>();
-    protected CopyableRandom r;
+    protected CopyableRandom rand;
 
     public AbstractCreatureAI() {
-        r = new CopyableRandom();
+        rand = new CopyableRandom();
     }
 
     protected AbstractCreatureAI(AbstractCreatureAI creature) {
@@ -23,7 +23,7 @@ public abstract class AbstractCreatureAI {
         for (PowerAI power : creature.powers) {
             this.powers.add(power.clone());
         }
-        this.r = creature.r.copy();
+        this.rand = creature.rand.copy();
     }
 
     public int getHealth() {
@@ -39,15 +39,49 @@ public abstract class AbstractCreatureAI {
     }
 
     public void takeDamage(AbstractCreatureAI source, int damage) {
-        damage += source.getPower(PowerAI.PowerTypeAI.STRENGTH);
+        int strength = 0;
+        int vulnerable = 0;
+        int weak = 0;
+
+        for (PowerAI power : source.powers) {
+            switch (power.getType()) {
+                case STRENGTH:
+                    strength = power.getAmount();
+                    break;
+                case WEAK:
+                    weak = power.getAmount();
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        int size = powers.size();
+        for (int i = 0; i < size; i++) {
+            PowerAI power = powers.get(i);
+            switch (power.getType()) {
+                case VULNERABLE:
+                    vulnerable = power.getAmount();
+                    break;
+                case ANGRY:
+                    addPower(PowerTypeAI.STRENGTH, power.getAmount());
+                    break;
+                default:
+                    break;
+            }
+
+        }
+
+        // Strength
+        damage += strength;
 
         // Vulnerable
-        if (getPower(PowerTypeAI.VULNERABLE) > 0) {
+        if (vulnerable > 0) {
             damage *= 1.5;
         }
 
         // Weak
-        if (source.getPower(PowerTypeAI.WEAK) > 0) {
+        if (weak > 0) {
             damage *= 0.75;
         }
 
@@ -58,8 +92,12 @@ public abstract class AbstractCreatureAI {
         }
     }
 
-    public void addBlock (int value) {
-        block += value;
+    public void addBlock(int value) {
+        if (getPower(PowerTypeAI.FRAIL) > 0) {
+            block += value * 0.75;
+        } else {
+            block += value;
+        }
     }
 
     public void resetBlock() {
@@ -67,6 +105,9 @@ public abstract class AbstractCreatureAI {
     }
 
     public void addPower(PowerTypeAI type, int amount) {
+        if (amount == 0) {
+            return;
+        }
         for (PowerAI power : powers) {
             if (power.getType() == type) {
                 power.addAmount(amount);
@@ -105,11 +146,19 @@ public abstract class AbstractCreatureAI {
     }
 
     public void endTurnPower() {
-        for (PowerAI power : powers) {
+        int size = powers.size();
+        for (int i = 0; i < size; i++) {
+            PowerAI power = powers.get(i);
             switch (power.getType()) {
                 case VULNERABLE:
                 case WEAK:
                     power.removeAmount(1);
+                case PRE_RITUAL:
+                    addPower(PowerTypeAI.RITUAL, power.getAmount());
+                    power.removeAmount(power.getAmount());
+                    break;
+                case RITUAL:
+                    addPower(PowerTypeAI.STRENGTH, power.getAmount());
                 default:
                     break;
             }

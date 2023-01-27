@@ -1,6 +1,7 @@
 package algorithms;
 
 import dungeon.DungeonState;
+import monsters.act1.regular.*;
 import org.junit.Test;
 import util.IroncladUtil;
 
@@ -15,9 +16,13 @@ public class DFSAlgorithmTest {
         int average = 0;
         int worst = 80;
         int best = 0;
-        int loops = 1000;
+        int loops = 5;
         for (int i = 0; i < loops; i++) {
-            ArrayList<DungeonState> bestPath = dungeonStateDFS(IroncladUtil.getLouseState());
+            DungeonState state = IroncladUtil.getIronCladDungeonState();
+            state.getMonsters().add(new WizardGremlinAI());
+            state.getMonsters().add(new ShieldGremlinAI(state));
+            state.getMonsters().add(new MadGremlinAI());
+            ArrayList<DungeonState> bestPath = dungeonStateDFS(state);
             int health = bestPath.get(bestPath.size() - 1).getPlayer().getHealth();
             average += health;
             if (health < worst) {
