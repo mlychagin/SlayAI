@@ -1,18 +1,18 @@
 package cards.ironclad.starter;
 
-import cards.interfaces.PlayerCardAI;
-import player.PlayerAI;
+import cards.CardIdUtil.CardId;
+import cards.interfaces.StateCardAI;
+import dungeon.DungeonState;
 
-public class DefendAI extends PlayerCardAI {
+public class DefendAI extends StateCardAI {
 
     public DefendAI() {
         cardId = CardId.DEFEND;
         cost = 1;
-        exhaust = false;
     }
 
     @Override
-    public void playCard(PlayerAI player) {
-        player.addBlock(upgraded ? 8 : 5);
+    public void playCard(DungeonState state) {
+        state.getPlayer().addBlock(upgraded ? 8 : 5);
     }
 }

@@ -3,6 +3,7 @@ package monsters;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import com.megacrit.cardcrawl.powers.AbstractPower;
 import com.megacrit.cardcrawl.powers.StrengthPower;
+import dungeon.CopyableRandom;
 import dungeon.DungeonState;
 import powers.PowerAI;
 import powers.PowerAI.PowerTypeAI;
@@ -13,6 +14,7 @@ public abstract class AbstractMonsterAI extends AbstractCreatureAI {
     protected ArrayList<Byte> moveHistory;
 
     public AbstractMonsterAI() {
+        rand = new CopyableRandom(1000);
     }
 
     public AbstractMonsterAI(AbstractMonster monster) {

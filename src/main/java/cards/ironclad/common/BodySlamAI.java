@@ -4,17 +4,18 @@ import cards.CardIdUtil.CardId;
 import cards.interfaces.AttackCardAI;
 import dungeon.DungeonState;
 import monsters.AbstractMonsterAI;
+import player.PlayerAI;
 
-public class AngerAI extends AttackCardAI {
+public class BodySlamAI extends AttackCardAI {
 
-    public AngerAI() {
-        cardId = CardId.ANGER;
-        cost = 0;
+    public BodySlamAI() {
+        cardId = CardId.BODY_SLAM;
+        cost = 1;
     }
 
     @Override
     public void playCard(DungeonState state, AbstractMonsterAI monster) {
-        monster.takeDamage(state.getPlayer(), upgraded ? 8 : 6);
-        state.addCardToDiscardPile(new AngerAI());
+        PlayerAI player = state.getPlayer();
+        monster.takeDamage(player, player.getBlock());
     }
 }

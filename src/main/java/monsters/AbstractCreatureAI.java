@@ -14,7 +14,7 @@ public abstract class AbstractCreatureAI {
     protected CopyableRandom rand;
 
     public AbstractCreatureAI() {
-        rand = new CopyableRandom();
+        rand = new CopyableRandom(1000);
     }
 
     protected AbstractCreatureAI(AbstractCreatureAI creature) {
@@ -32,6 +32,10 @@ public abstract class AbstractCreatureAI {
 
     public int getBlock() {
         return block;
+    }
+
+    public CopyableRandom getRand() {
+        return rand;
     }
 
     public void takeHealing(int value) {
@@ -118,12 +122,26 @@ public abstract class AbstractCreatureAI {
     }
 
     public void removePower(PowerTypeAI type, int amount) {
+        if (amount == 0) {
+            return;
+        }
         for (PowerAI power : powers) {
             if (power.getType() == type) {
-                power.addAmount(amount);
+                power.removeAmount(amount);
                 return;
             }
         }
+    }
+
+    public PowerAI getPowerObject(PowerTypeAI type) {
+        PowerAI power;
+        for (PowerAI powerAI : powers) {
+            power = powerAI;
+            if (power.getType() == type) {
+                return power;
+            }
+        }
+        return null;
     }
 
     public int getPower(PowerTypeAI type) {
@@ -159,10 +177,35 @@ public abstract class AbstractCreatureAI {
                     break;
                 case RITUAL:
                     addPower(PowerTypeAI.STRENGTH, power.getAmount());
+                    break;
+                case FLEX:
+                    removePower(PowerTypeAI.STRENGTH, power.getAmount());
+                    power.removeAmount(power.getAmount());
+                    break;
                 default:
                     break;
             }
         }
+    }
+
+    public boolean isBetterInAnyWay(AbstractCreatureAI other) {
+        if (this.health < other.health) {
+            return false;
+        }
+        if (this.block < other.block) {
+            return false;
+        }
+        for (PowerAI power : this.powers) {
+            if (power.compare(other.getPowerObject(power.getType())) < 0) {
+                return false;
+            }
+        }
+        for (PowerAI power : other.powers) {
+            if (power.compare(this.getPowerObject(power.getType())) < 0) {
+                return false;
+            }
+        }
+        return true;
     }
 
     @Override

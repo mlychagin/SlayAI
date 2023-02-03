@@ -4,10 +4,10 @@ import cards.CardIdUtil.CardId;
 import cards.interfaces.StateCardAI;
 import dungeon.DungeonState;
 
-public class SlimedAI extends StateCardAI {
-    public SlimedAI() {
-        cardId = CardId.SLIMED;
-        cost = 1;
+public class WoundAI extends StateCardAI {
+    public WoundAI() {
+        cardId = CardId.WOUND;
+        cost = 0;
     }
 
     @Override

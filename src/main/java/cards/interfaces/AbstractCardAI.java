@@ -1,38 +1,31 @@
 package cards.interfaces;
 
-import java.util.HashMap;
+import cards.CardIdUtil.CardId;
+import dungeon.DungeonState;
+
 import java.util.Objects;
 
 public abstract class AbstractCardAI {
-    public static HashMap<CardId, Integer> cardPriority = new HashMap<>();
-
-    static {
-        cardPriority.put(CardId.BASH, 40);
-        cardPriority.put(CardId.STRIKE, 60);
-        cardPriority.put(CardId.DEFEND, 70);
-        cardPriority.put(CardId.SLIMED, 99);
-        cardPriority.put(CardId.ANGER, 60);
-    }
-
     protected boolean upgraded;
     protected int cost;
     protected CardId cardId;
-    protected boolean exhaust;
+    protected boolean draw = false;
 
     public CardId getCardId() {
         return cardId;
-    }
-
-    public int getPriority() {
-        return cardPriority.get(cardId);
     }
 
     public int getEnergyCost() {
         return cost;
     }
 
-    public boolean isExhaust() {
-        return exhaust;
+    protected void exhaustCard(DungeonState state) {
+        state.getHand().remove(this);
+        state.getExhaustPile().add(this);
+    }
+
+    public boolean isDraw() {
+        return draw;
     }
 
     @Override
@@ -48,11 +41,4 @@ public abstract class AbstractCardAI {
         return Objects.hash(upgraded, cost, cardId);
     }
 
-    public enum CardId {
-        BASH,
-        STRIKE,
-        DEFEND,
-        SLIMED,
-        ANGER
-    }
 }

@@ -72,7 +72,6 @@ public class SpikeSlimeLargeAI extends AbstractMonsterAI {
                 break;
             case SPLIT:
                 ArrayList<AbstractMonsterAI> monsters = state.getMonsters();
-                monsters.remove(this);
                 monsters.add(new SpikeSlimeMediumAI(this.health / 2));
                 monsters.add(new SpikeSlimeMediumAI(this.health / 2));
                 health = 0;

@@ -25,7 +25,6 @@ public abstract class LouseAI extends AbstractMonsterAI {
 
     public LouseAI() {
         super();
-        this.rand = new CopyableRandom();
         this.health = 10 + rand.nextInt(6);
         this.block = 0;
         this.bonusDamage = 5 + rand.nextInt(3);

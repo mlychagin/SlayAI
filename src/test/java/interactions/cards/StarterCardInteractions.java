@@ -1,27 +1,18 @@
-package interactions;
+package interactions.cards;
 
 import cards.ironclad.starter.BashAI;
 import cards.ironclad.starter.DefendAI;
 import cards.ironclad.starter.StrikeAI;
 import dungeon.DungeonState;
 import monsters.AbstractMonsterAI;
-import monsters.act1.regular.JawWormAI;
 import org.junit.Assert;
 import org.junit.Test;
 import player.PlayerAI;
 import powers.PowerAI.PowerTypeAI;
-import util.IroncladUtil;
-import util.MonsterUtil;
 
-import static util.IroncladUtil.getIronCladDungeonState;
 import static util.IroncladUtil.getJawWormState;
 
-public class CardInteractions {
-
-    /*
-     * TODO:
-     *  Anger
-     */
+public class StarterCardInteractions {
 
     @Test
     public void starterIroncladCards() {
@@ -40,10 +31,11 @@ public class CardInteractions {
         Assert.assertEquals(monster.getHealth(), 30);
         Assert.assertEquals(monster.getPower(PowerTypeAI.VULNERABLE), 2);
 
-        defend.playCard(player);
+        defend.playCard(state);
         Assert.assertEquals(player.getBlock(), 5);
 
         strike.playCard(state, monster);
         Assert.assertEquals(monster.getHealth(), 21);
     }
+
 }

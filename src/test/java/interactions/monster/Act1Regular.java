@@ -178,7 +178,7 @@ public class Act1Regular {
         monster.takeDamage(player, 50);
         Assert.assertEquals((byte) monster.getCurrentMove(), AcidSlimeLargeAI.SPLIT);
         monster.playTurn(state);
-        Assert.assertEquals(2, state.getMonsters().size());
+        Assert.assertEquals(3, state.getMonsters().size());
     }
 
     @Test
@@ -272,7 +272,7 @@ public class Act1Regular {
 
         monster.takeDamage(player, 50);
         monster.playTurn(state);
-        Assert.assertEquals(2, state.getMonsters().size());
+        Assert.assertEquals(3, state.getMonsters().size());
     }
 
     @Test

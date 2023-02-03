@@ -1,4 +1,4 @@
-package cards.ironclad.starter;
+package cards.ironclad.common;
 
 import cards.CardIdUtil.CardId;
 import cards.interfaces.AttackCardAI;
@@ -6,17 +6,17 @@ import dungeon.DungeonState;
 import monsters.AbstractMonsterAI;
 import powers.PowerAI.PowerTypeAI;
 
-public class BashAI extends AttackCardAI {
+public class ClotheslineAI extends AttackCardAI {
 
-    public BashAI() {
-        cardId = CardId.BASH;
+    public ClotheslineAI() {
+        cardId = CardId.CLOTHESLINE;
         cost = 2;
     }
 
     @Override
     public void playCard(DungeonState state, AbstractMonsterAI monster) {
-        monster.takeDamage(state.getPlayer(), upgraded ? 10 : 8);
-        monster.addPower(PowerTypeAI.VULNERABLE, upgraded ? 3 : 2);
+        monster.takeDamage(state.getPlayer(), upgraded ? 14 : 12);
+        monster.addPower(PowerTypeAI.WEAK, upgraded ? 3 : 2);
     }
 
 }
