@@ -5,8 +5,10 @@ import cards.interfaces.StateCardAI;
 import dungeon.DungeonState;
 
 public class SlimedAI extends StateCardAI {
-    public SlimedAI() {
+
+    public SlimedAI(boolean upgraded) {
         cardId = CardId.SLIMED;
+        this.upgraded = upgraded;
         cost = 1;
     }
 

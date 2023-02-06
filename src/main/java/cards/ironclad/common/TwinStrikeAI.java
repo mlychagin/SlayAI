@@ -8,9 +8,10 @@ import player.PlayerAI;
 
 public class TwinStrikeAI extends AttackCardAI {
 
-    public TwinStrikeAI() {
+    public TwinStrikeAI(boolean upgraded) {
         cardId = CardId.TWIN_STRIKE;
-        cost = 0;
+        this.upgraded = upgraded;
+        cost = 1;
     }
 
     @Override

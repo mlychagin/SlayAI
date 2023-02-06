@@ -9,8 +9,9 @@ import powers.PowerAI;
 
 public class ThunderclapAI extends StateCardAI {
 
-    public ThunderclapAI() {
+    public ThunderclapAI(boolean upgraded) {
         cardId = CardId.THUNDERCLAP;
+        this.upgraded = upgraded;
         cost = 1;
     }
 

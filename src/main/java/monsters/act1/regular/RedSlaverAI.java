@@ -1,8 +1,12 @@
 package monsters.act1.regular;
 
+import com.megacrit.cardcrawl.monsters.AbstractMonster;
+import dungeon.CopyableRandom;
 import dungeon.DungeonState;
 import monsters.AbstractMonsterAI;
+import monsters.CreatureIdUtil.CreatureId;
 import player.PlayerAI;
+import powers.PowerAI;
 import powers.PowerAI.PowerTypeAI;
 
 import java.util.ArrayList;
@@ -12,17 +16,18 @@ public class RedSlaverAI extends AbstractMonsterAI {
     public static final byte ENTANGLE = 2;
     public static final byte SCRAPE = 3;
 
-    private RedSlaverAI(RedSlaverAI monster) {
-        super(monster);
+    public RedSlaverAI(int health, int block, ArrayList<PowerAI> powers, ArrayList<Byte> moveHistory,
+                       CopyableRandom rand, AbstractMonster monster) {
+        super(health, block, powers, moveHistory, rand, monster);
+        creatureId = CreatureId.RED_SLAVER;
     }
 
     public RedSlaverAI() {
         super();
-        this.health = 46 + rand.nextInt(5);
-        this.block = 0;
-        this.powers = new ArrayList<>();
-        this.moveHistory = new ArrayList<>();
-        this.moveHistory.add(STAB);
+        creatureId = CreatureId.RED_SLAVER;
+        health = 46 + rand.nextInt(5);
+        block = 0;
+        moveHistory.add(STAB);
     }
 
     @Override
@@ -78,11 +83,14 @@ public class RedSlaverAI extends AbstractMonsterAI {
                 player.takeDamage(this, 8);
                 player.addPower(PowerTypeAI.VULNERABLE, 1);
                 break;
+            default:
+                throw new RuntimeException("Invalid move : " + getCurrentMove());
         }
     }
 
     @Override
     public RedSlaverAI clone() {
-        return new RedSlaverAI(this);
+        return new RedSlaverAI(health, block, clonePowers(),
+                new ArrayList<>(moveHistory), rand.copy(), monster);
     }
 }

@@ -1,25 +1,30 @@
 package monsters.act1.regular;
 
+import com.megacrit.cardcrawl.monsters.AbstractMonster;
+import dungeon.CopyableRandom;
 import dungeon.DungeonState;
 import monsters.AbstractMonsterAI;
+import monsters.CreatureIdUtil.CreatureId;
 import player.PlayerAI;
+import powers.PowerAI;
 
 import java.util.ArrayList;
 
 public class SpikeSlimeSmallAI extends AbstractMonsterAI {
     public static final byte TACKLE = 1;
 
-    private SpikeSlimeSmallAI(SpikeSlimeSmallAI monster) {
-        super(monster);
+    public SpikeSlimeSmallAI(int health, int block, ArrayList<PowerAI> powers, ArrayList<Byte> moveHistory,
+                             CopyableRandom rand, AbstractMonster monster) {
+        super(health, block, powers, moveHistory, rand, monster);
+        creatureId = CreatureId.SPIKE_SLIME_SMALL;
     }
 
     public SpikeSlimeSmallAI() {
         super();
-        this.health = 10 + rand.nextInt(5);
-        this.maxHealth = health;
-        this.block = 0;
-        this.powers = new ArrayList<>();
-        this.moveHistory = new ArrayList<>();
+        creatureId = CreatureId.SPIKE_SLIME_SMALL;
+        health = 10 + rand.nextInt(5);
+        maxHealth = health;
+        block = 0;
         getNextMove(null);
     }
 
@@ -33,11 +38,14 @@ public class SpikeSlimeSmallAI extends AbstractMonsterAI {
         PlayerAI player = state.getPlayer();
         if (getCurrentMove() == TACKLE) {
             player.takeDamage(this, 5);
+            return;
         }
+        throw new RuntimeException("Invalid move : " + getCurrentMove());
     }
 
     @Override
     public SpikeSlimeSmallAI clone() {
-        return new SpikeSlimeSmallAI(this);
+        return new SpikeSlimeSmallAI(health, block, clonePowers(), new ArrayList<>(moveHistory),
+                rand.copy(), monster);
     }
 }

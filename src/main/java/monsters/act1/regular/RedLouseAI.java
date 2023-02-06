@@ -1,20 +1,34 @@
 package monsters.act1.regular;
 
+import com.megacrit.cardcrawl.monsters.AbstractMonster;
+import dungeon.CopyableRandom;
 import dungeon.DungeonState;
+import monsters.CreatureIdUtil.CreatureId;
 import monsters.act1.interfaces.LouseAI;
 import player.PlayerAI;
+import powers.PowerAI;
 import powers.PowerAI.PowerTypeAI;
+
+import java.util.ArrayList;
 
 public class RedLouseAI extends LouseAI {
     public static final byte BITE = 3;
     public static final byte GROW = 4;
 
-    private RedLouseAI(RedLouseAI monster) {
-        super(monster);
+    public RedLouseAI(int health, int block, ArrayList<PowerAI> powers, ArrayList<Byte> moveHistory,
+                      CopyableRandom rand, AbstractMonster monster, int bonusDamage) {
+        super(health, block, powers, moveHistory, rand, monster, bonusDamage);
+        creatureId = CreatureId.RED_LOUSE;
     }
 
     public RedLouseAI() {
         super();
+        creatureId = CreatureId.RED_LOUSE;
+        health = 10 + rand.nextInt(6);
+        block = 0;
+        bonusDamage = 5 + rand.nextInt(3);
+        addPower(PowerTypeAI.CURL_UP, 1);
+        getNextMove(null);
     }
 
     @Override
@@ -49,11 +63,14 @@ public class RedLouseAI extends LouseAI {
             case GROW:
                 addPower(PowerTypeAI.STRENGTH, 3);
                 break;
+            default:
+                throw new RuntimeException("Invalid move : " + getCurrentMove());
         }
     }
 
     @Override
     public RedLouseAI clone() {
-        return new RedLouseAI(this);
+        return new RedLouseAI(health, block, clonePowers(), new ArrayList<>(moveHistory),
+                rand.copy(), monster, bonusDamage);
     }
 }

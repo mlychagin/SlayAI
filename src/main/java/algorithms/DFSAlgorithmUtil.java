@@ -27,8 +27,9 @@ public class DFSAlgorithmUtil {
         }
         return path.get(path.size() - 1).getHeuristic();
     }
-    
-    private static void stateSearchRecursive(ArrayList<DungeonState> bestPath, ArrayList<DungeonState> currentPath, int depth) {
+
+    private static void stateSearchRecursive(ArrayList<DungeonState> bestPath,
+                                             ArrayList<DungeonState> currentPath, int depth) {
         DungeonState currentState = currentPath.get(currentPath.size() - 1);
         int bestPathHeuristic = getPathHeuristic(bestPath);
         int currentPathHeuristic = getPathHeuristic(currentPath);
@@ -59,7 +60,8 @@ public class DFSAlgorithmUtil {
          *  1. This path is already worse than the best path
          *  2. MAX_DEPTH has been reached
          *
-         * NOTE: This assumes you can't gain HP from cards. This can be modified in the future / exceptions made
+         * NOTE: This assumes you can't gain HP from cards. This can be modified in the future / exceptions
+         *  made
          */
         if (bestPathHeuristic > currentPathHeuristic || MAX_DEPTH == depth) {
             return;
@@ -72,10 +74,10 @@ public class DFSAlgorithmUtil {
             currentPath.remove(currentPath.size() - 1);
         }
     }
-    
+
     public static ArrayList<DungeonState> getPossibleStates(DungeonState state) {
         ArrayList<DungeonState> result = new ArrayList<>();
-        HashSet<ArrayList<AbstractCardAI>> moveSet = getMoveSet(state.getHand(), 3);
+        HashSet<ArrayList<AbstractCardAI>> moveSet = getMoveSet(state.getHand(), state.getCurrentEnergy());
         for (ArrayList<AbstractCardAI> move : moveSet) {
             result.addAll(getPossibleStatesForMove(state, move));
         }
@@ -94,8 +96,9 @@ public class DFSAlgorithmUtil {
         }
         return result;
     }
-    
-    public static ArrayList<DungeonState> getPossibleStatesForMove(DungeonState startState, ArrayList<AbstractCardAI> move) {
+
+    public static ArrayList<DungeonState> getPossibleStatesForMove(DungeonState startState,
+                                                                   ArrayList<AbstractCardAI> move) {
         ArrayList<DungeonState> tmp;
         ArrayList<DungeonState> result = new ArrayList<>();
         ArrayList<DungeonState> input = new ArrayList<>();
@@ -129,17 +132,19 @@ public class DFSAlgorithmUtil {
                     }
                 }
             }
+            if (output.size() == 0) {
+                break;
+            }
             tmp = input;
             input = output;
             tmp.clear();
             output = tmp;
         }
         for (DungeonState state : input) {
-            state.getCardsPlayed().addAll(move);
             state.endTurn();
         }
         result.addAll(input);
         return result;
     }
-    
+
 }

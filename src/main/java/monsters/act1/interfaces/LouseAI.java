@@ -1,6 +1,6 @@
 package monsters.act1.interfaces;
 
-import com.megacrit.cardcrawl.monsters.exordium.LouseNormal;
+import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import dungeon.CopyableRandom;
 import monsters.AbstractCreatureAI;
 import monsters.AbstractMonsterAI;
@@ -10,28 +10,16 @@ import powers.PowerAI.PowerTypeAI;
 import java.util.ArrayList;
 
 public abstract class LouseAI extends AbstractMonsterAI {
-    protected final int bonusDamage;
+    protected int bonusDamage;
 
-    public LouseAI(LouseNormal monster) {
-        super(monster);
-        //Todo: Figure out the exact number when monster attacks
-        bonusDamage = 5 + rand.nextInt(3);
-    }
-
-    protected LouseAI(LouseAI monster) {
-        super(monster);
-        bonusDamage = monster.bonusDamage;
+    public LouseAI(int health, int block, ArrayList<PowerAI> powers, ArrayList<Byte> moveHistory,
+                   CopyableRandom rand, AbstractMonster monster, int bonusDamage) {
+        super(health, block, powers, moveHistory, rand, monster);
+        this.bonusDamage = bonusDamage;
     }
 
     public LouseAI() {
         super();
-        this.health = 10 + rand.nextInt(6);
-        this.block = 0;
-        this.bonusDamage = 5 + rand.nextInt(3);
-        this.powers = new ArrayList<>();
-        this.moveHistory = new ArrayList<>();
-        addPower(PowerTypeAI.CURL_UP, 1);
-        getNextMove(null);
     }
 
     public int getBonusDamage() {

@@ -1,6 +1,7 @@
 package cards.interfaces;
 
 import cards.CardIdUtil.CardId;
+import com.megacrit.cardcrawl.cards.AbstractCard;
 import dungeon.DungeonState;
 
 import java.util.Objects;
@@ -10,6 +11,7 @@ public abstract class AbstractCardAI {
     protected int cost;
     protected CardId cardId;
     protected boolean draw = false;
+    protected transient AbstractCard card;
 
     public CardId getCardId() {
         return cardId;
@@ -26,6 +28,14 @@ public abstract class AbstractCardAI {
 
     public boolean isDraw() {
         return draw;
+    }
+
+    public AbstractCard getCard() {
+        return card;
+    }
+
+    public void setCard(AbstractCard card) {
+        this.card = card;
     }
 
     @Override

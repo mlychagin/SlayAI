@@ -1,5 +1,5 @@
 {
-  "modid": "${project.artifactId}",
+  "modid": "SlayAI",
   "name": "SlayAI",
   "author_list": [
     "Mikhail"
@@ -8,7 +8,5 @@
   "version": "1.0",
   "mts_version": "3.30.0",
   "sts_version": "12-18-2022",
-  "dependencies": [
-    "basemod"
-  ]
+  "dependencies": ["basemod", "CommunicationMod"]
 }

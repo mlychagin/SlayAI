@@ -1,9 +1,13 @@
 package monsters.act1.regular;
 
+import com.megacrit.cardcrawl.monsters.AbstractMonster;
+import dungeon.CopyableRandom;
 import dungeon.DungeonState;
 import monsters.AbstractCreatureAI;
 import monsters.AbstractMonsterAI;
+import monsters.CreatureIdUtil.CreatureId;
 import player.PlayerAI;
+import powers.PowerAI;
 import powers.PowerAI.PowerTypeAI;
 
 import java.util.ArrayList;
@@ -12,16 +16,17 @@ public class FungiBeastAI extends AbstractMonsterAI {
     public static final byte BITE = 1;
     public static final byte GROW = 2;
 
-    private FungiBeastAI(FungiBeastAI monster) {
-        super(monster);
+    public FungiBeastAI(int health, int block, ArrayList<PowerAI> powers,
+                        ArrayList<Byte> moveHistory, CopyableRandom rand, AbstractMonster monster) {
+        super(health, block, powers, moveHistory, rand, monster);
+        creatureId = CreatureId.FUNGI_BEAST;
     }
 
     public FungiBeastAI() {
         super();
-        this.health = 22 + rand.nextInt(7);
-        this.block = 0;
-        this.powers = new ArrayList<>();
-        this.moveHistory = new ArrayList<>();
+        creatureId = CreatureId.FUNGI_BEAST;
+        health = 22 + rand.nextInt(7);
+        block = 0;
         getNextMove(null);
     }
 
@@ -65,11 +70,14 @@ public class FungiBeastAI extends AbstractMonsterAI {
             case GROW:
                 addPower(PowerTypeAI.STRENGTH, 3);
                 break;
+            default:
+                throw new RuntimeException("Invalid move : " + getCurrentMove());
         }
     }
 
     @Override
     public FungiBeastAI clone() {
-        return new FungiBeastAI(this);
+        return new FungiBeastAI(health, block, clonePowers(),
+                new ArrayList<>(moveHistory), rand.copy(), monster);
     }
 }

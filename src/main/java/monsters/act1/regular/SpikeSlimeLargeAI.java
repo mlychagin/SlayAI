@@ -1,10 +1,14 @@
 package monsters.act1.regular;
 
 import cards.neutral.SlimedAI;
+import com.megacrit.cardcrawl.monsters.AbstractMonster;
+import dungeon.CopyableRandom;
 import dungeon.DungeonState;
 import monsters.AbstractCreatureAI;
 import monsters.AbstractMonsterAI;
+import monsters.CreatureIdUtil.CreatureId;
 import player.PlayerAI;
+import powers.PowerAI;
 import powers.PowerAI.PowerTypeAI;
 
 import java.util.ArrayList;
@@ -14,17 +18,18 @@ public class SpikeSlimeLargeAI extends AbstractMonsterAI {
     public static final byte SPLIT = 3;
     public static final byte LICK = 4;
 
-    private SpikeSlimeLargeAI(SpikeSlimeLargeAI monster) {
-        super(monster);
+    public SpikeSlimeLargeAI(int health, int block, ArrayList<PowerAI> powers, ArrayList<Byte> moveHistory,
+                             CopyableRandom rand, AbstractMonster monster) {
+        super(health, block, powers, moveHistory, rand, monster);
+        creatureId = CreatureId.SPIKE_SLIME_LARGE;
     }
 
     public SpikeSlimeLargeAI() {
         super();
-        this.health = 64 + rand.nextInt(7);
-        this.maxHealth = health;
-        this.block = 0;
-        this.powers = new ArrayList<>();
-        this.moveHistory = new ArrayList<>();
+        creatureId = CreatureId.SPIKE_SLIME_LARGE;
+        health = 64 + rand.nextInt(7);
+        maxHealth = health;
+        block = 0;
         getNextMove(null);
     }
 
@@ -64,8 +69,8 @@ public class SpikeSlimeLargeAI extends AbstractMonsterAI {
         switch (getCurrentMove()) {
             case FLAME_TACKLE:
                 player.takeDamage(this, 16);
-                state.addCardToDiscardPile(new SlimedAI());
-                state.addCardToDiscardPile(new SlimedAI());
+                state.addCardToDiscardPile(new SlimedAI(false));
+                state.addCardToDiscardPile(new SlimedAI(false));
                 break;
             case LICK:
                 player.addPower(PowerTypeAI.FRAIL, 2);
@@ -76,11 +81,14 @@ public class SpikeSlimeLargeAI extends AbstractMonsterAI {
                 monsters.add(new SpikeSlimeMediumAI(this.health / 2));
                 health = 0;
                 break;
+            default:
+                throw new RuntimeException("Invalid move : " + getCurrentMove());
         }
     }
 
     @Override
     public SpikeSlimeLargeAI clone() {
-        return new SpikeSlimeLargeAI(this);
+        return new SpikeSlimeLargeAI(health, block, clonePowers(),
+                new ArrayList<>(moveHistory), rand.copy(), monster);
     }
 }

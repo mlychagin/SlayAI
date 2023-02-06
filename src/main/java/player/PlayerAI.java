@@ -1,18 +1,21 @@
 package player;
 
-import com.megacrit.cardcrawl.characters.AbstractPlayer;
+import dungeon.CopyableRandom;
 import monsters.AbstractCreatureAI;
+import monsters.CreatureIdUtil;
+import powers.PowerAI;
+
+import java.util.ArrayList;
 
 public class PlayerAI extends AbstractCreatureAI {
 
-    public PlayerAI(AbstractPlayer player) {
-        health = player.currentHealth;
-        block = player.currentBlock;
+    public PlayerAI() {
+        creatureId = CreatureIdUtil.CreatureId.PLAYER;
     }
 
-    public PlayerAI(PlayerAI player) {
-        this.health = player.health;
-        this.block = player.block;
+    public PlayerAI(int health, int block, ArrayList<PowerAI> powers, CopyableRandom rand) {
+        super(health, block, powers, rand);
+        creatureId = CreatureIdUtil.CreatureId.PLAYER;
     }
 
     public PlayerAI(int health, int block) {
@@ -22,6 +25,6 @@ public class PlayerAI extends AbstractCreatureAI {
 
     @Override
     public PlayerAI clone() {
-        return new PlayerAI(this);
+        return new PlayerAI(health, block, clonePowers(), rand.copy());
     }
 }

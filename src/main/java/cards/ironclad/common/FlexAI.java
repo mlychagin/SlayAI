@@ -8,8 +8,9 @@ import powers.PowerAI;
 
 public class FlexAI extends StateCardAI {
 
-    public FlexAI() {
+    public FlexAI(boolean upgraded) {
         cardId = CardId.FLEX;
+        this.upgraded = upgraded;
         cost = 1;
     }
 

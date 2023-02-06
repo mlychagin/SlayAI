@@ -1,10 +1,14 @@
 package monsters.act1.regular;
 
 import cards.neutral.SlimedAI;
+import com.megacrit.cardcrawl.monsters.AbstractMonster;
+import dungeon.CopyableRandom;
 import dungeon.DungeonState;
 import monsters.AbstractCreatureAI;
 import monsters.AbstractMonsterAI;
+import monsters.CreatureIdUtil.CreatureId;
 import player.PlayerAI;
+import powers.PowerAI;
 import powers.PowerAI.PowerTypeAI;
 
 import java.util.ArrayList;
@@ -15,17 +19,18 @@ public class AcidSlimeLargeAI extends AbstractMonsterAI {
     public static final byte SPLIT = 3;
     public static final byte LICK = 4;
 
-    private AcidSlimeLargeAI(AcidSlimeLargeAI monster) {
-        super(monster);
+    public AcidSlimeLargeAI(int health, int block, ArrayList<PowerAI> powers,
+                            ArrayList<Byte> moveHistory, CopyableRandom rand, AbstractMonster monster) {
+        super(health, block, powers, moveHistory, rand, monster);
+        creatureId = CreatureId.ACID_SLIME_LARGE;
     }
 
     public AcidSlimeLargeAI() {
         super();
-        this.health = 65 + rand.nextInt(5);
-        this.maxHealth = health;
-        this.block = 0;
-        this.powers = new ArrayList<>();
-        this.moveHistory = new ArrayList<>();
+        creatureId = CreatureId.ACID_SLIME_LARGE;
+        health = 65 + rand.nextInt(5);
+        maxHealth = health;
+        block = 0;
         getNextMove(null);
     }
 
@@ -71,8 +76,8 @@ public class AcidSlimeLargeAI extends AbstractMonsterAI {
         switch (getCurrentMove()) {
             case CORROSIVE_SPIT:
                 player.takeDamage(this, 11);
-                state.addCardToDiscardPile(new SlimedAI());
-                state.addCardToDiscardPile(new SlimedAI());
+                state.addCardToDiscardPile(new SlimedAI(false));
+                state.addCardToDiscardPile(new SlimedAI(false));
                 break;
             case LICK:
                 player.addPower(PowerTypeAI.WEAK, 2);
@@ -86,11 +91,14 @@ public class AcidSlimeLargeAI extends AbstractMonsterAI {
                 monsters.add(new AcidSlimeMediumAI(this.health / 2));
                 health = 0;
                 break;
+            default:
+                throw new RuntimeException("Invalid move : " + getCurrentMove());
         }
     }
 
     @Override
     public AcidSlimeLargeAI clone() {
-        return new AcidSlimeLargeAI(this);
+        return new AcidSlimeLargeAI(health, block, clonePowers(),
+                new ArrayList<>(moveHistory), rand.copy(), monster);
     }
 }

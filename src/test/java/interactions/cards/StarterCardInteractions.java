@@ -20,9 +20,9 @@ public class StarterCardInteractions {
         PlayerAI player = state.getPlayer();
         AbstractMonsterAI monster = state.getMonsters().get(0);
 
-        BashAI bash = new BashAI();
-        DefendAI defend = new DefendAI();
-        StrikeAI strike = new StrikeAI();
+        BashAI bash = new BashAI(false);
+        DefendAI defend = new DefendAI(false);
+        StrikeAI strike = new StrikeAI(false);
 
         strike.playCard(state, monster);
         Assert.assertEquals(monster.getHealth(), 38);

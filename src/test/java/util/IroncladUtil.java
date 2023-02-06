@@ -14,10 +14,10 @@ public class IroncladUtil {
     // Deck consists of 1x Bash, 5x Defend, 5x Strike
     public static ArrayList<AbstractCardAI> getStarterIroncladDeck() {
         ArrayList<AbstractCardAI> deck = new ArrayList<>();
-        deck.add(new BashAI());
+        deck.add(new BashAI(false));
         for (int i = 0; i < 5; i++) {
-            deck.add(new StrikeAI());
-            deck.add(new DefendAI());
+            deck.add(new StrikeAI(false));
+            deck.add(new DefendAI(false));
         }
         return deck;
     }
@@ -30,7 +30,7 @@ public class IroncladUtil {
         PlayerAI player = getStarterIronclad();
         ArrayList<AbstractCardAI> deck = getStarterIroncladDeck();
         ArrayList<AbstractMonsterAI> monsters = new ArrayList<>();
-        return new DungeonState(player, deck, monsters);
+        return new DungeonState(player, deck, monsters, 3);
     }
 
     public static DungeonState getJawWormState() {
@@ -38,7 +38,7 @@ public class IroncladUtil {
         ArrayList<AbstractCardAI> deck = getStarterIroncladDeck();
         ArrayList<AbstractMonsterAI> monsters = new ArrayList<>();
         monsters.add(MonsterUtil.getJawWorm());
-        return new DungeonState(player, deck, monsters);
+        return new DungeonState(player, deck, monsters, 3);
     }
 
 }

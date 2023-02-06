@@ -6,8 +6,9 @@ import dungeon.DungeonState;
 
 public class DefendAI extends StateCardAI {
 
-    public DefendAI() {
+    public DefendAI(boolean upgraded) {
         cardId = CardId.DEFEND;
+        this.upgraded = upgraded;
         cost = 1;
     }
 

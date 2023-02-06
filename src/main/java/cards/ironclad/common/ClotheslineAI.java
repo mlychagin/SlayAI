@@ -8,8 +8,9 @@ import powers.PowerAI.PowerTypeAI;
 
 public class ClotheslineAI extends AttackCardAI {
 
-    public ClotheslineAI() {
+    public ClotheslineAI(boolean upgraded) {
         cardId = CardId.CLOTHESLINE;
+        this.upgraded = upgraded;
         cost = 2;
     }
 

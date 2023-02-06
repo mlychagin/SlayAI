@@ -5,12 +5,12 @@ import cards.interfaces.AttackCardAI;
 import cards.neutral.WoundAI;
 import dungeon.DungeonState;
 import monsters.AbstractMonsterAI;
-import player.PlayerAI;
 
 public class WildStrikeAI extends AttackCardAI {
 
-    public WildStrikeAI() {
+    public WildStrikeAI(boolean upgraded) {
         cardId = CardId.WILD_STRIKE;
+        this.upgraded = upgraded;
         cost = 1;
     }
 

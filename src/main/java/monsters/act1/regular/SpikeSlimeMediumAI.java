@@ -1,9 +1,13 @@
 package monsters.act1.regular;
 
 import cards.neutral.SlimedAI;
+import com.megacrit.cardcrawl.monsters.AbstractMonster;
+import dungeon.CopyableRandom;
 import dungeon.DungeonState;
 import monsters.AbstractMonsterAI;
+import monsters.CreatureIdUtil.CreatureId;
 import player.PlayerAI;
+import powers.PowerAI;
 import powers.PowerAI.PowerTypeAI;
 
 import java.util.ArrayList;
@@ -12,27 +16,27 @@ public class SpikeSlimeMediumAI extends AbstractMonsterAI {
     public static final byte FLAME_TACKLE = 1;
     public static final byte LICK = 4;
 
-    private SpikeSlimeMediumAI(SpikeSlimeMediumAI monster) {
-        super(monster);
+    public SpikeSlimeMediumAI(int health, int block, ArrayList<PowerAI> powers, ArrayList<Byte> moveHistory
+            , CopyableRandom rand, AbstractMonster monster) {
+        super(health, block, powers, moveHistory, rand, monster);
+        creatureId = CreatureId.SPIKE_SLIME_MEDIUM;
     }
 
     public SpikeSlimeMediumAI(int health) {
         super();
+        creatureId = CreatureId.SPIKE_SLIME_MEDIUM;
         this.health = health;
-        this.maxHealth = health;
-        this.block = 0;
-        this.powers = new ArrayList<>();
-        this.moveHistory = new ArrayList<>();
+        maxHealth = health;
+        block = 0;
         getNextMove(null);
     }
 
     public SpikeSlimeMediumAI() {
         super();
-        this.health = 28 + rand.nextInt(5);
-        this.maxHealth = health;
-        this.block = 0;
-        this.powers = new ArrayList<>();
-        this.moveHistory = new ArrayList<>();
+        creatureId = CreatureId.SPIKE_SLIME_MEDIUM;
+        health = 28 + rand.nextInt(5);
+        maxHealth = health;
+        block = 0;
         getNextMove(null);
     }
 
@@ -64,16 +68,19 @@ public class SpikeSlimeMediumAI extends AbstractMonsterAI {
         switch (getCurrentMove()) {
             case FLAME_TACKLE:
                 player.takeDamage(this, 8);
-                state.addCardToDiscardPile(new SlimedAI());
+                state.addCardToDiscardPile(new SlimedAI(false));
                 break;
             case LICK:
                 player.addPower(PowerTypeAI.FRAIL, 1);
                 break;
+            default:
+                throw new RuntimeException("Invalid move : " + getCurrentMove());
         }
     }
 
     @Override
     public SpikeSlimeMediumAI clone() {
-        return new SpikeSlimeMediumAI(this);
+        return new SpikeSlimeMediumAI(health, block, clonePowers(),
+                new ArrayList<>(moveHistory), rand.copy(), monster);
     }
 }

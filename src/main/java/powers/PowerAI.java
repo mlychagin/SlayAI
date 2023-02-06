@@ -89,6 +89,7 @@ public class PowerAI {
         FRAIL,
         ANGRY,
         ENTANGLE,
-        FLEX
+        FLEX,
+        SPORE
     }
 }

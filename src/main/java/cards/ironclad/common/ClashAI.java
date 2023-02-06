@@ -10,8 +10,9 @@ import static cards.CardIdUtil.isAttackCard;
 
 public class ClashAI extends AttackCardAI {
 
-    public ClashAI() {
+    public ClashAI(boolean upgraded) {
         cardId = CardId.CLASH;
+        this.upgraded = upgraded;
         cost = 0;
     }
 
@@ -19,7 +20,7 @@ public class ClashAI extends AttackCardAI {
     public void playCard(DungeonState state, AbstractMonsterAI monster) {
         for (AbstractCardAI card : state.getHand()) {
             if (isAttackCard(card.getCardId())) {
-                throw new RuntimeException();
+                throw new RuntimeException("Clash played when unplayable");
             }
         }
         monster.takeDamage(state.getPlayer(), upgraded ? 18 : 14);

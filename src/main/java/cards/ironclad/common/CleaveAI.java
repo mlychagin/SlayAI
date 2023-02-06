@@ -8,8 +8,9 @@ import player.PlayerAI;
 
 public class CleaveAI extends StateCardAI {
 
-    public CleaveAI() {
+    public CleaveAI(boolean upgraded) {
         cardId = CardId.CLEAVE;
+        this.upgraded = upgraded;
         cost = 1;
     }
 

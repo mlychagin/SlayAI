@@ -6,9 +6,11 @@ import dungeon.DungeonState;
 
 public class ShrugItOffAI extends StateCardAI {
 
-    public ShrugItOffAI() {
+    public ShrugItOffAI(boolean upgraded) {
         cardId = CardId.SHRUG_IT_OFF;
+        this.upgraded = upgraded;
         cost = 1;
+        draw = true;
     }
 
     @Override

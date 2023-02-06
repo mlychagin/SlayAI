@@ -1,0 +1,210 @@
+{
+  "player": {
+    "health": 65,
+    "maxHealth": 0,
+    "block": 0,
+    "powers": [],
+    "rand": {
+      "innerSeed": {
+        "value": 246737107172625
+      },
+      "seed": {
+        "value": 178575813824279
+      },
+      "nextNextGaussian": 0.0,
+      "haveNextNextGaussian": false
+    }
+  },
+  "hand": [
+    {
+      "upgraded": false,
+      "cost": 1,
+      "cardId": "STRIKE",
+      "draw": false
+    },
+    {
+      "upgraded": true,
+      "cost": 2,
+      "cardId": "BASH",
+      "draw": false
+    },
+    {
+      "upgraded": false,
+      "cost": 1,
+      "cardId": "STRIKE",
+      "draw": false
+    },
+    {
+      "upgraded": false,
+      "cost": 1,
+      "cardId": "DEFEND",
+      "draw": false
+    },
+    {
+      "upgraded": false,
+      "cost": 1,
+      "cardId": "TWIN_STRIKE",
+      "draw": false
+    }
+  ],
+  "exhaustPile": [],
+  "discardPile": [],
+  "drawPile": [
+    {
+      "upgraded": false,
+      "cost": 0,
+      "cardId": "ANGER",
+      "draw": false
+    },
+    {
+      "upgraded": false,
+      "cost": 1,
+      "cardId": "STRIKE",
+      "draw": false
+    },
+    {
+      "upgraded": false,
+      "cost": 1,
+      "cardId": "DEFEND",
+      "draw": false
+    },
+    {
+      "upgraded": false,
+      "cost": 2,
+      "cardId": "PERFECTED_STRIKE",
+      "draw": false
+    },
+    {
+      "upgraded": false,
+      "cost": 1,
+      "cardId": "DEFEND",
+      "draw": false
+    },
+    {
+      "upgraded": false,
+      "cost": 0,
+      "cardId": "ANGER",
+      "draw": false
+    },
+    {
+      "upgraded": false,
+      "cost": 1,
+      "cardId": "DEFEND",
+      "draw": false
+    },
+    {
+      "upgraded": false,
+      "cost": 1,
+      "cardId": "STRIKE",
+      "draw": false
+    },
+    {
+      "upgraded": false,
+      "cost": 1,
+      "cardId": "THUNDERCLAP",
+      "draw": false
+    },
+    {
+      "upgraded": false,
+      "cost": 1,
+      "cardId": "STRIKE",
+      "draw": false
+    }
+  ],
+  "monsters": [
+    {
+      "bonusDamage": 5,
+      "moveHistory": [
+        4,
+        3,
+        4
+      ],
+      "creatureId": "RED_LOUSE",
+      "health": 3,
+      "maxHealth": 0,
+      "block": 0,
+      "powers": [
+        {
+          "type": "STRENGTH",
+          "amount": 3
+        }
+      ],
+      "rand": {
+        "innerSeed": {
+          "value": 246737107269732
+        },
+        "seed": {
+          "value": 262985027713341
+        },
+        "nextNextGaussian": 0.0,
+        "haveNextNextGaussian": false
+      }
+    },
+    {
+      "bonusDamage": 5,
+      "moveHistory": [
+        3
+      ],
+      "creatureId": "RED_LOUSE",
+      "health": 0,
+      "maxHealth": 0,
+      "block": 0,
+      "powers": [],
+      "rand": {
+        "innerSeed": {
+          "value": 246737107258923
+        },
+        "seed": {
+          "value": 256068356294051
+        },
+        "nextNextGaussian": 0.0,
+        "haveNextNextGaussian": false
+      }
+    },
+    {
+      "bonusDamage": 5,
+      "moveHistory": [
+        3,
+        3,
+        4
+      ],
+      "creatureId": "GREEN_LOUSE",
+      "health": 11,
+      "maxHealth": 0,
+      "block": 0,
+      "powers": [],
+      "rand": {
+        "innerSeed": {
+          "value": 246737107258336
+        },
+        "seed": {
+          "value": 217732128377263
+        },
+        "nextNextGaussian": 0.0,
+        "haveNextNextGaussian": false
+      }
+    }
+  ],
+  "shuffleRandom": {
+    "innerSeed": {
+      "value": 246737107261027
+    },
+    "seed": {
+      "value": 62958368857439
+    },
+    "nextNextGaussian": 0.0,
+    "haveNextNextGaussian": false
+  },
+  "miscRandom": {
+    "innerSeed": {
+      "value": 246737107261088
+    },
+    "seed": {
+      "value": 100984841236173
+    },
+    "nextNextGaussian": 0.0,
+    "haveNextNextGaussian": false
+  },
+  "currentEnergy": 3,
+  "maxEnergy": 3
+}

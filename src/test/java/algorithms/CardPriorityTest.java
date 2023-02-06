@@ -32,7 +32,7 @@ public class CardPriorityTest {
     @Test
     public void drawCard() {
         ArrayList<AbstractCardAI> hand = IroncladUtil.getStarterIroncladDeck();
-        hand.add(new PommelStrikeAI());
+        hand.add(new PommelStrikeAI(false));
 
         Assert.assertEquals(getMoveSet(hand, 0).size(), 1);
         Assert.assertEquals(getMoveSet(hand, 1).size(), 3);

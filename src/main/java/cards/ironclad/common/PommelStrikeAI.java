@@ -7,8 +7,9 @@ import monsters.AbstractMonsterAI;
 
 public class PommelStrikeAI extends AttackCardAI {
 
-    public PommelStrikeAI() {
+    public PommelStrikeAI(boolean upgraded) {
         cardId = CardId.POMMEL_STRIKE;
+        this.upgraded = upgraded;
         cost = 1;
         draw = true;
     }

@@ -1,0 +1,150 @@
+{
+  "player": {
+    "health": 88,
+    "maxHealth": 0,
+    "block": 0,
+    "powers": [],
+    "rand": {
+      "innerSeed": {
+        "value": 5817705296965
+      },
+      "seed": {
+        "value": 277695992760246
+      },
+      "nextNextGaussian": 0.0,
+      "haveNextNextGaussian": false
+    }
+  },
+  "hand": [
+    {
+      "upgraded": false,
+      "cost": 1,
+      "cardId": "STRIKE",
+      "draw": false
+    },
+    {
+      "upgraded": false,
+      "cost": 1,
+      "cardId": "DEFEND",
+      "draw": false
+    },
+    {
+      "upgraded": false,
+      "cost": 1,
+      "cardId": "DEFEND",
+      "draw": false
+    },
+    {
+      "upgraded": false,
+      "cost": 1,
+      "cardId": "STRIKE",
+      "draw": false
+    },
+    {
+      "upgraded": false,
+      "cost": 1,
+      "cardId": "STRIKE",
+      "draw": false
+    }
+  ],
+  "exhaustPile": [],
+  "discardPile": [],
+  "drawPile": [
+    {
+      "upgraded": false,
+      "cost": 1,
+      "cardId": "STRIKE",
+      "draw": false
+    },
+    {
+      "upgraded": false,
+      "cost": 1,
+      "cardId": "DEFEND",
+      "draw": false
+    },
+    {
+      "upgraded": false,
+      "cost": 1,
+      "cardId": "DEFEND",
+      "draw": false
+    },
+    {
+      "upgraded": false,
+      "cost": 1,
+      "cardId": "STRIKE",
+      "draw": false
+    },
+    {
+      "upgraded": false,
+      "cost": 2,
+      "cardId": "BASH",
+      "draw": false
+    }
+  ],
+  "monsters": [
+    {
+      "moveHistory": [
+        1
+      ],
+      "creatureId": "SPIKE_SLIME_SMALL",
+      "health": 0,
+      "maxHealth": 0,
+      "block": 0,
+      "powers": [],
+      "rand": {
+        "innerSeed": {
+          "value": 5817705270540
+        },
+        "seed": {
+          "value": 65641810502780
+        },
+        "nextNextGaussian": 0.0,
+        "haveNextNextGaussian": false
+      }
+    },
+    {
+      "moveHistory": [
+        4,
+        4,
+        1
+      ],
+      "creatureId": "ACID_SLIME_MEDIUM",
+      "health": 16,
+      "maxHealth": 0,
+      "block": 0,
+      "powers": [],
+      "rand": {
+        "innerSeed": {
+          "value": 5817705271865
+        },
+        "seed": {
+          "value": 122934409007700
+        },
+        "nextNextGaussian": 0.0,
+        "haveNextNextGaussian": false
+      }
+    }
+  ],
+  "shuffleRandom": {
+    "innerSeed": {
+      "value": 5817705271706
+    },
+    "seed": {
+      "value": 167996732372178
+    },
+    "nextNextGaussian": 0.0,
+    "haveNextNextGaussian": false
+  },
+  "miscRandom": {
+    "innerSeed": {
+      "value": 5817705275195
+    },
+    "seed": {
+      "value": 170476584213472
+    },
+    "nextNextGaussian": 0.0,
+    "haveNextNextGaussian": false
+  },
+  "currentEnergy": 3,
+  "maxEnergy": 3
+}

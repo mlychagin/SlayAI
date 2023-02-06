@@ -1,0 +1,237 @@
+{
+  "player": {
+    "health": 77,
+    "maxHealth": 0,
+    "block": 0,
+    "powers": [],
+    "rand": {
+      "innerSeed": {
+        "value": 7040905972502
+      },
+      "seed": {
+        "value": 159987243487467
+      },
+      "nextNextGaussian": 0.0,
+      "haveNextNextGaussian": false
+    }
+  },
+  "hand": [
+    {
+      "upgraded": false,
+      "cost": 1,
+      "cardId": "DEFEND",
+      "draw": false
+    },
+    {
+      "upgraded": false,
+      "cost": 1,
+      "cardId": "STRIKE",
+      "draw": false
+    },
+    {
+      "upgraded": false,
+      "cost": 2,
+      "cardId": "BASH",
+      "draw": false
+    },
+    {
+      "upgraded": false,
+      "cost": 0,
+      "cardId": "ANGER",
+      "draw": false
+    },
+    {
+      "upgraded": false,
+      "cost": 1,
+      "cardId": "TWIN_STRIKE",
+      "draw": false
+    }
+  ],
+  "exhaustPile": [],
+  "discardPile": [],
+  "drawPile": [
+    {
+      "upgraded": false,
+      "cost": 1,
+      "cardId": "DEFEND",
+      "draw": false
+    },
+    {
+      "upgraded": false,
+      "cost": 1,
+      "cardId": "DEFEND",
+      "draw": false
+    },
+    {
+      "upgraded": false,
+      "cost": 1,
+      "cardId": "STRIKE",
+      "draw": false
+    },
+    {
+      "upgraded": false,
+      "cost": 1,
+      "cardId": "DEFEND",
+      "draw": false
+    },
+    {
+      "upgraded": false,
+      "cost": 1,
+      "cardId": "STRIKE",
+      "draw": false
+    },
+    {
+      "upgraded": false,
+      "cost": 1,
+      "cardId": "STRIKE",
+      "draw": false
+    },
+    {
+      "upgraded": false,
+      "cost": 0,
+      "cardId": "ANGER",
+      "draw": false
+    },
+    {
+      "upgraded": false,
+      "cost": 1,
+      "cardId": "POMMEL_STRIKE",
+      "draw": true
+    },
+    {
+      "upgraded": false,
+      "cost": 1,
+      "cardId": "STRIKE",
+      "draw": false
+    }
+  ],
+  "monsters": [
+    {
+      "moveHistory": [
+        1
+      ],
+      "creatureId": "SPIKE_SLIME_SMALL",
+      "health": 0,
+      "maxHealth": 0,
+      "block": 0,
+      "powers": [],
+      "rand": {
+        "innerSeed": {
+          "value": 7040903473913
+        },
+        "seed": {
+          "value": 51572179614353
+        },
+        "nextNextGaussian": 0.0,
+        "haveNextNextGaussian": false
+      }
+    },
+    {
+      "moveHistory": [
+        1,
+        2
+      ],
+      "creatureId": "ACID_SLIME_SMALL",
+      "health": 0,
+      "maxHealth": 0,
+      "block": 0,
+      "powers": [],
+      "rand": {
+        "innerSeed": {
+          "value": 7040903476390
+        },
+        "seed": {
+          "value": 280481114725751
+        },
+        "nextNextGaussian": 0.0,
+        "haveNextNextGaussian": false
+      }
+    },
+    {
+      "moveHistory": [
+        1,
+        2,
+        1
+      ],
+      "creatureId": "ACID_SLIME_SMALL",
+      "health": 12,
+      "maxHealth": 0,
+      "block": 0,
+      "powers": [],
+      "rand": {
+        "innerSeed": {
+          "value": 7040903476183
+        },
+        "seed": {
+          "value": 41774740507989
+        },
+        "nextNextGaussian": 0.0,
+        "haveNextNextGaussian": false
+      }
+    },
+    {
+      "moveHistory": [
+        1
+      ],
+      "creatureId": "SPIKE_SLIME_SMALL",
+      "health": 0,
+      "maxHealth": 0,
+      "block": 0,
+      "powers": [],
+      "rand": {
+        "innerSeed": {
+          "value": 7040903475708
+        },
+        "seed": {
+          "value": 274129027433819
+        },
+        "nextNextGaussian": 0.0,
+        "haveNextNextGaussian": false
+      }
+    },
+    {
+      "moveHistory": [
+        1,
+        1,
+        1
+      ],
+      "creatureId": "SPIKE_SLIME_SMALL",
+      "health": 11,
+      "maxHealth": 0,
+      "block": 0,
+      "powers": [],
+      "rand": {
+        "innerSeed": {
+          "value": 7040903479079
+        },
+        "seed": {
+          "value": 22269954159853
+        },
+        "nextNextGaussian": 0.0,
+        "haveNextNextGaussian": false
+      }
+    }
+  ],
+  "shuffleRandom": {
+    "innerSeed": {
+      "value": 7040903479200
+    },
+    "seed": {
+      "value": 228975212839989
+    },
+    "nextNextGaussian": 0.0,
+    "haveNextNextGaussian": false
+  },
+  "miscRandom": {
+    "innerSeed": {
+      "value": 7040903478387
+    },
+    "seed": {
+      "value": 280903784007615
+    },
+    "nextNextGaussian": 0.0,
+    "haveNextNextGaussian": false
+  },
+  "currentEnergy": 3,
+  "maxEnergy": 3
+}

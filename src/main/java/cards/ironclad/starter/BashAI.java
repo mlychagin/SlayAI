@@ -8,8 +8,9 @@ import powers.PowerAI.PowerTypeAI;
 
 public class BashAI extends AttackCardAI {
 
-    public BashAI() {
+    public BashAI(boolean upgraded) {
         cardId = CardId.BASH;
+        this.upgraded = upgraded;
         cost = 2;
     }
 

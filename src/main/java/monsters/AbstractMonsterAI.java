@@ -1,37 +1,26 @@
 package monsters;
 
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
-import com.megacrit.cardcrawl.powers.AbstractPower;
-import com.megacrit.cardcrawl.powers.StrengthPower;
 import dungeon.CopyableRandom;
 import dungeon.DungeonState;
 import powers.PowerAI;
-import powers.PowerAI.PowerTypeAI;
 
 import java.util.ArrayList;
 
 public abstract class AbstractMonsterAI extends AbstractCreatureAI {
+    protected transient AbstractMonster monster;
     protected ArrayList<Byte> moveHistory;
 
+    public AbstractMonsterAI(int health, int block, ArrayList<PowerAI> powers,
+                             ArrayList<Byte> moveHistory, CopyableRandom rand, AbstractMonster monster) {
+        super(health, block, powers, rand);
+        this.monster = monster;
+        this.moveHistory = moveHistory;
+    }
+
     public AbstractMonsterAI() {
-        rand = new CopyableRandom(1000);
-    }
-
-    public AbstractMonsterAI(AbstractMonster monster) {
-        health = monster.currentHealth;
-        block = monster.currentBlock;
-        powers = new ArrayList<>();
-        for (AbstractPower power : monster.powers) {
-            if (power instanceof StrengthPower) {
-                powers.add(new PowerAI(PowerTypeAI.STRENGTH, power.amount));
-            }
-        }
-        moveHistory = new ArrayList<>(monster.moveHistory);
-    }
-
-    protected AbstractMonsterAI(AbstractMonsterAI monster) {
-        super(monster);
-        moveHistory = new ArrayList<>(monster.moveHistory);
+        moveHistory = new ArrayList<>();
+        rand = new CopyableRandom();
     }
 
     protected boolean lastMoveEquals(byte move) {
@@ -45,17 +34,14 @@ public abstract class AbstractMonsterAI extends AbstractCreatureAI {
         if (moveHistory.size() < 2) {
             return false;
         }
-        return moveHistory.get(moveHistory.size() - 1) == move &&
-                moveHistory.get(moveHistory.size() - 2) == move;
+        return moveHistory.get(moveHistory.size() - 1) == move && moveHistory.get(moveHistory.size() - 2) == move;
     }
 
     protected boolean lastThreeMovesEqual(byte move) {
         if (moveHistory.size() < 3) {
             return false;
         }
-        return moveHistory.get(moveHistory.size() - 1) == move &&
-                moveHistory.get(moveHistory.size() - 2) == move &&
-                moveHistory.get(moveHistory.size() - 3) == move;
+        return moveHistory.get(moveHistory.size() - 1) == move && moveHistory.get(moveHistory.size() - 2) == move && moveHistory.get(moveHistory.size() - 3) == move;
     }
 
     public abstract void getNextMove(DungeonState state);
@@ -98,6 +84,10 @@ public abstract class AbstractMonsterAI extends AbstractCreatureAI {
         } else {
             addBlock(block);
         }
+    }
+
+    public AbstractMonster getMonster() {
+        return monster;
     }
 
     @Override

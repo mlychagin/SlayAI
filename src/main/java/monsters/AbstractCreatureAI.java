@@ -1,29 +1,30 @@
 package monsters;
 
 import dungeon.CopyableRandom;
+import monsters.CreatureIdUtil.CreatureId;
 import powers.PowerAI;
 import powers.PowerAI.PowerTypeAI;
 
 import java.util.ArrayList;
 
 public abstract class AbstractCreatureAI {
+    protected CreatureId creatureId;
     protected int health;
     protected int maxHealth;
     protected int block;
-    protected ArrayList<PowerAI> powers = new ArrayList<>();
+    protected ArrayList<PowerAI> powers;
     protected CopyableRandom rand;
 
     public AbstractCreatureAI() {
-        rand = new CopyableRandom(1000);
+        rand = new CopyableRandom();
+        powers = new ArrayList<>();
     }
 
-    protected AbstractCreatureAI(AbstractCreatureAI creature) {
-        this.health = creature.health;
-        this.block = creature.block;
-        for (PowerAI power : creature.powers) {
-            this.powers.add(power.clone());
-        }
-        this.rand = creature.rand.copy();
+    protected AbstractCreatureAI(int health, int block, ArrayList<PowerAI> powers, CopyableRandom rand) {
+        this.health = health;
+        this.block = block;
+        this.powers = powers;
+        this.rand = rand;
     }
 
     public int getHealth() {
@@ -94,6 +95,11 @@ public abstract class AbstractCreatureAI {
             health += block;
             block = 0;
         }
+
+        if (health <= 0) {
+            health = 0;
+            powers.clear();
+        }
     }
 
     public void addBlock(int value) {
@@ -109,7 +115,7 @@ public abstract class AbstractCreatureAI {
     }
 
     public void addPower(PowerTypeAI type, int amount) {
-        if (amount == 0) {
+        if (amount == 0 || health <= 0) {
             return;
         }
         for (PowerAI power : powers) {
@@ -171,6 +177,7 @@ public abstract class AbstractCreatureAI {
                 case VULNERABLE:
                 case WEAK:
                     power.removeAmount(1);
+                    break;
                 case PRE_RITUAL:
                     addPower(PowerTypeAI.RITUAL, power.getAmount());
                     power.removeAmount(power.getAmount());
@@ -189,26 +196,30 @@ public abstract class AbstractCreatureAI {
     }
 
     public boolean isBetterInAnyWay(AbstractCreatureAI other) {
-        if (this.health < other.health) {
-            return false;
+        if (this.health > other.health) {
+            return true;
         }
-        if (this.block < other.block) {
-            return false;
+        if (this.block > other.block) {
+            return true;
         }
         for (PowerAI power : this.powers) {
-            if (power.compare(other.getPowerObject(power.getType())) < 0) {
-                return false;
+            if (power.compare(other.getPowerObject(power.getType())) > 0) {
+                return true;
             }
         }
         for (PowerAI power : other.powers) {
             if (power.compare(this.getPowerObject(power.getType())) < 0) {
-                return false;
+                return true;
             }
         }
-        return true;
+        return false;
     }
 
-    @Override
-    public abstract AbstractCreatureAI clone();
-
+    protected ArrayList<PowerAI> clonePowers() {
+        ArrayList<PowerAI> result = new ArrayList<>();
+        for (PowerAI power : powers) {
+            result.add(power.clone());
+        }
+        return result;
+    }
 }

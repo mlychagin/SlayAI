@@ -8,8 +8,9 @@ import player.PlayerAI;
 
 public class BodySlamAI extends AttackCardAI {
 
-    public BodySlamAI() {
+    public BodySlamAI(boolean upgraded) {
         cardId = CardId.BODY_SLAM;
+        this.upgraded = upgraded;
         cost = 1;
     }
 

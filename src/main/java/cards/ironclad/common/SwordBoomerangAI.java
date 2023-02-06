@@ -10,8 +10,9 @@ import java.util.Random;
 
 public class SwordBoomerangAI extends StateCardAI {
 
-    public SwordBoomerangAI() {
+    public SwordBoomerangAI(boolean upgraded) {
         cardId = CardId.SWORD_BOOMERANG;
+        this.upgraded = upgraded;
         cost = 1;
     }
 

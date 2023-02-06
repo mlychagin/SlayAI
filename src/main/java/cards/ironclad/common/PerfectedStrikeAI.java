@@ -6,13 +6,13 @@ import cards.interfaces.AttackCardAI;
 import dungeon.DungeonState;
 import monsters.AbstractMonsterAI;
 
-import static cards.CardIdUtil.isAttackCard;
 import static cards.CardIdUtil.isStrikeCard;
 
 public class PerfectedStrikeAI extends AttackCardAI {
 
-    public PerfectedStrikeAI() {
+    public PerfectedStrikeAI(boolean upgraded) {
         cardId = CardId.PERFECTED_STRIKE;
+        this.upgraded = upgraded;
         cost = 2;
     }
 

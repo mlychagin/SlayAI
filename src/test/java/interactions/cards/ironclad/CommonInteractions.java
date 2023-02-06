@@ -28,7 +28,7 @@ public class CommonInteractions {
     public void testAnger() {
         DungeonState state = getJawWormState();
         AbstractMonsterAI monster = state.getMonsters().get(0);
-        AngerAI anger = new AngerAI();
+        AngerAI anger = new AngerAI(false);
 
         anger.playCard(state, monster);
 
@@ -40,7 +40,7 @@ public class CommonInteractions {
     public void testBodySlam() {
         DungeonState state = getJawWormState();
         AbstractMonsterAI monster = state.getMonsters().get(0);
-        BodySlamAI card = new BodySlamAI();
+        BodySlamAI card = new BodySlamAI(false);
 
         state.getPlayer().addBlock(100);
         card.playCard(state, monster);
@@ -52,7 +52,7 @@ public class CommonInteractions {
     public void testClash() {
         DungeonState state = getJawWormState();
         AbstractMonsterAI monster = state.getMonsters().get(0);
-        ClashAI card = new ClashAI();
+        ClashAI card = new ClashAI(false);
 
         try {
             card.playCard(state, monster);
@@ -71,7 +71,7 @@ public class CommonInteractions {
         DungeonState state = getJawWormState();
         state.getPlayer().addPower(PowerAI.PowerTypeAI.STRENGTH, 1);
         AbstractMonsterAI monster = state.getMonsters().get(0);
-        TwinStrikeAI card = new TwinStrikeAI();
+        TwinStrikeAI card = new TwinStrikeAI(false);
 
         card.playCard(state, monster);
 
@@ -82,7 +82,7 @@ public class CommonInteractions {
     public void testThunderClap() {
         DungeonState state = getJawWormState();
         state.getMonsters().add(new JawWormAI());
-        ThunderclapAI card = new ThunderclapAI();
+        ThunderclapAI card = new ThunderclapAI(false);
 
         card.playCard(state);
 
@@ -96,7 +96,7 @@ public class CommonInteractions {
     public void testIronWave() {
         DungeonState state = getJawWormState();
         AbstractMonsterAI monster = state.getMonsters().get(0);
-        IronWaveAI card = new IronWaveAI();
+        IronWaveAI card = new IronWaveAI(false);
 
         card.playCard(state, monster);
 
@@ -108,7 +108,7 @@ public class CommonInteractions {
     public void testClothesline() {
         DungeonState state = getJawWormState();
         AbstractMonsterAI monster = state.getMonsters().get(0);
-        ClotheslineAI card = new ClotheslineAI();
+        ClotheslineAI card = new ClotheslineAI(false);
 
         card.playCard(state, monster);
 
@@ -120,7 +120,7 @@ public class CommonInteractions {
     public void testCleave() {
         DungeonState state = getJawWormState();
         state.getMonsters().add(new JawWormAI());
-        CleaveAI card = new CleaveAI();
+        CleaveAI card = new CleaveAI(false);
 
         card.playCard(state);
 
@@ -133,7 +133,7 @@ public class CommonInteractions {
     public void testSwordBoomerang() {
         DungeonState state = getJawWormState();
         state.getMonsters().add(new JawWormAI());
-        SwordBoomerangAI card = new SwordBoomerangAI();
+        SwordBoomerangAI card = new SwordBoomerangAI(false);
         int totalDamage = 0;
 
         card.playCard(state);
@@ -148,7 +148,7 @@ public class CommonInteractions {
     public void testPommelStrike() {
         DungeonState state = getJawWormState();
         AbstractMonsterAI monster = state.getMonsters().get(0);
-        PommelStrikeAI card = new PommelStrikeAI();
+        PommelStrikeAI card = new PommelStrikeAI(false);
 
         card.playCard(state, monster);
 
@@ -159,7 +159,7 @@ public class CommonInteractions {
     @Test
     public void testShrugItOff() {
         DungeonState state = getJawWormState();
-        ShrugItOffAI card = new ShrugItOffAI();
+        ShrugItOffAI card = new ShrugItOffAI(false);
 
         card.playCard(state);
 
@@ -172,17 +172,17 @@ public class CommonInteractions {
         DungeonState state = getJawWormState();
         state.getPlayer().addPower(PowerAI.PowerTypeAI.STRENGTH, 2);
         AbstractMonsterAI monster = state.getMonsters().get(0);
-        HeavyBladeAI card = new HeavyBladeAI();
+        HeavyBladeAI card = new HeavyBladeAI(false);
 
         card.playCard(state, monster);
 
-        Assert.assertEquals(monster.getHealth() + 14 + (3*2), 44);
+        Assert.assertEquals(monster.getHealth() + 14 + (3 * 2), 44);
     }
 
     @Test
     public void testFlex() {
         DungeonState state = getJawWormState();
-        FlexAI card = new FlexAI();
+        FlexAI card = new FlexAI(false);
 
         card.playCard(state);
 
@@ -193,7 +193,7 @@ public class CommonInteractions {
     public void testWildStrike() {
         DungeonState state = getJawWormState();
         AbstractMonsterAI monster = state.getMonsters().get(0);
-        WildStrikeAI card = new WildStrikeAI();
+        WildStrikeAI card = new WildStrikeAI(false);
         boolean containsWound = false;
 
         card.playCard(state, monster);

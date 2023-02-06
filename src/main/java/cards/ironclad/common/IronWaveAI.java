@@ -8,8 +8,9 @@ import player.PlayerAI;
 
 public class IronWaveAI extends AttackCardAI {
 
-    public IronWaveAI() {
+    public IronWaveAI(boolean upgraded) {
         cardId = CardId.IRON_WAVE;
+        this.upgraded = upgraded;
         cost = 1;
     }
 

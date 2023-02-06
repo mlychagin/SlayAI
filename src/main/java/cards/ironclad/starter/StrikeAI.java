@@ -7,8 +7,9 @@ import monsters.AbstractMonsterAI;
 
 public class StrikeAI extends AttackCardAI {
 
-    public StrikeAI() {
+    public StrikeAI(boolean upgraded) {
         cardId = CardId.STRIKE;
+        this.upgraded = upgraded;
         cost = 1;
     }
 

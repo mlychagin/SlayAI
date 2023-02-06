@@ -1,26 +1,32 @@
 package monsters.act1.regular;
 
+import com.megacrit.cardcrawl.monsters.AbstractMonster;
+import dungeon.CopyableRandom;
 import dungeon.DungeonState;
 import monsters.AbstractMonsterAI;
+import monsters.CreatureIdUtil.CreatureId;
 import player.PlayerAI;
+import powers.PowerAI;
 
 import java.util.ArrayList;
+
 
 public class ShieldGremlinAI extends AbstractMonsterAI {
     public static final byte PROTECT = 1;
     public static final byte SHIELD_BASH = 2;
 
-    private ShieldGremlinAI(ShieldGremlinAI monster) {
-        super(monster);
+    public ShieldGremlinAI(int health, int block, ArrayList<PowerAI> powers, ArrayList<Byte> moveHistory,
+                           CopyableRandom rand, AbstractMonster monster) {
+        super(health, block, powers, moveHistory, rand, monster);
+        creatureId = CreatureId.SHIELD_GREMLIN;
     }
 
     public ShieldGremlinAI(DungeonState state) {
         super();
-        this.health = 12 + rand.nextInt(4);
-        this.maxHealth = health;
-        this.block = 0;
-        this.powers = new ArrayList<>();
-        this.moveHistory = new ArrayList<>();
+        creatureId = CreatureId.SHIELD_GREMLIN;
+        health = 12 + rand.nextInt(4);
+        maxHealth = health;
+        block = 0;
         getNextMove(state);
     }
 
@@ -39,11 +45,14 @@ public class ShieldGremlinAI extends AbstractMonsterAI {
             case SHIELD_BASH:
                 player.takeDamage(this, 6);
                 break;
+            default:
+                throw new RuntimeException("Invalid move : " + getCurrentMove());
         }
     }
 
     @Override
     public ShieldGremlinAI clone() {
-        return new ShieldGremlinAI(this);
+        return new ShieldGremlinAI(health, block, clonePowers(),
+                new ArrayList<>(moveHistory), rand.copy(), monster);
     }
 }

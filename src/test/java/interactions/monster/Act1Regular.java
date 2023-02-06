@@ -60,7 +60,7 @@ public class Act1Regular {
         int bonusDamage = monster.getBonusDamage();
         Assert.assertEquals(monster.getPower(PowerTypeAI.CURL_UP), 1);
 
-        new StrikeAI().playCard(state, monster);
+        new StrikeAI(false).playCard(state, monster);
         Assert.assertEquals(monster.getPower(PowerTypeAI.CURL_UP), 0);
         Assert.assertTrue(monster.getBlock() >= 3);
 
@@ -90,7 +90,7 @@ public class Act1Regular {
         int bonusDamage = monster.getBonusDamage();
         Assert.assertEquals(monster.getPower(PowerTypeAI.CURL_UP), 1);
 
-        new StrikeAI().playCard(state, monster);
+        new StrikeAI(false).playCard(state, monster);
         Assert.assertEquals(monster.getPower(PowerTypeAI.CURL_UP), 0);
         Assert.assertTrue(monster.getBlock() >= 3);
 
@@ -158,12 +158,12 @@ public class Act1Regular {
             byte move = monster.getCurrentMove();
             int prevHealth = player.getHealth();
             int prevWeak = player.getPower(PowerTypeAI.WEAK);
-            int prevSlimed = getOccurrences(state.getDiscardPile(), new SlimedAI());
+            int prevSlimed = getOccurrences(state.getDiscardPile(), new SlimedAI(false));
             monster.playTurn(state);
             switch (move) {
                 case AcidSlimeLargeAI.CORROSIVE_SPIT:
                     Assert.assertEquals(player.getHealth() + 11, prevHealth);
-                    Assert.assertEquals(prevSlimed + 2, getOccurrences(state.getDiscardPile(), new SlimedAI()));
+                    Assert.assertEquals(prevSlimed + 2, getOccurrences(state.getDiscardPile(), new SlimedAI(false)));
                     break;
                 case AcidSlimeLargeAI.LICK:
                     Assert.assertEquals(player.getPower(PowerTypeAI.WEAK) - prevWeak, 2);
@@ -192,12 +192,12 @@ public class Act1Regular {
             byte move = monster.getCurrentMove();
             int prevHealth = player.getHealth();
             int prevWeak = player.getPower(PowerTypeAI.WEAK);
-            int prevSlimed = getOccurrences(state.getDiscardPile(), new SlimedAI());
+            int prevSlimed = getOccurrences(state.getDiscardPile(), new SlimedAI(false));
             monster.playTurn(state);
             switch (move) {
                 case AcidSlimeMediumAI.CORROSIVE_SPIT:
                     Assert.assertEquals(player.getHealth() + 7, prevHealth);
-                    Assert.assertEquals(prevSlimed + 1, getOccurrences(state.getDiscardPile(), new SlimedAI()));
+                    Assert.assertEquals(prevSlimed + 1, getOccurrences(state.getDiscardPile(), new SlimedAI(false)));
                     break;
                 case AcidSlimeMediumAI.LICK:
                     Assert.assertEquals(player.getPower(PowerTypeAI.WEAK) - prevWeak, 1);
@@ -256,12 +256,12 @@ public class Act1Regular {
             byte move = monster.getCurrentMove();
             int prevHealth = player.getHealth();
             int prevFrail = player.getPower(PowerTypeAI.FRAIL);
-            int prevSlimed = getOccurrences(state.getDiscardPile(), new SlimedAI());
+            int prevSlimed = getOccurrences(state.getDiscardPile(), new SlimedAI(false));
             monster.playTurn(state);
             switch (move) {
                 case SpikeSlimeLargeAI.FLAME_TACKLE:
                     Assert.assertEquals(player.getHealth() + 16, prevHealth);
-                    Assert.assertEquals(prevSlimed + 2, getOccurrences(state.getDiscardPile(), new SlimedAI()));
+                    Assert.assertEquals(prevSlimed + 2, getOccurrences(state.getDiscardPile(), new SlimedAI(false)));
                     break;
                 case SpikeSlimeLargeAI.LICK:
                     Assert.assertEquals(player.getPower(PowerTypeAI.FRAIL) - prevFrail, 2);
@@ -286,12 +286,12 @@ public class Act1Regular {
             byte move = monster.getCurrentMove();
             int prevHealth = player.getHealth();
             int prevFrail = player.getPower(PowerTypeAI.FRAIL);
-            int prevSlimed = getOccurrences(state.getDiscardPile(), new SlimedAI());
+            int prevSlimed = getOccurrences(state.getDiscardPile(), new SlimedAI(false));
             monster.playTurn(state);
             switch (move) {
                 case SpikeSlimeMediumAI.FLAME_TACKLE:
                     Assert.assertEquals(player.getHealth() + 8, prevHealth);
-                    Assert.assertEquals(prevSlimed + 1, getOccurrences(state.getDiscardPile(), new SlimedAI()));
+                    Assert.assertEquals(prevSlimed + 1, getOccurrences(state.getDiscardPile(), new SlimedAI(false)));
                     break;
                 case SpikeSlimeMediumAI.LICK:
                     Assert.assertEquals(player.getPower(PowerTypeAI.FRAIL) - prevFrail, 1);

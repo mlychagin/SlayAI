@@ -1,8 +1,12 @@
 package monsters.act1.regular;
 
+import com.megacrit.cardcrawl.monsters.AbstractMonster;
+import dungeon.CopyableRandom;
 import dungeon.DungeonState;
 import monsters.AbstractMonsterAI;
+import monsters.CreatureIdUtil.CreatureId;
 import player.PlayerAI;
+import powers.PowerAI;
 import powers.PowerAI.PowerTypeAI;
 
 import java.util.ArrayList;
@@ -11,16 +15,17 @@ public class BlueSlaverAI extends AbstractMonsterAI {
     public static final byte STAB = 1;
     public static final byte RAKE = 4;
 
-    private BlueSlaverAI(BlueSlaverAI monster) {
-        super(monster);
+    public BlueSlaverAI(int health, int block, ArrayList<PowerAI> powers,
+                        ArrayList<Byte> moveHistory, CopyableRandom rand, AbstractMonster monster) {
+        super(health, block, powers, moveHistory, rand, monster);
+        creatureId = CreatureId.BLUE_SAVER;
     }
 
     public BlueSlaverAI() {
         super();
-        this.health = 46 + rand.nextInt(5);
-        this.block = 0;
-        this.powers = new ArrayList<>();
-        this.moveHistory = new ArrayList<>();
+        creatureId = CreatureId.BLUE_SAVER;
+        health = 46 + rand.nextInt(5);
+        block = 0;
         getNextMove(null);
     }
 
@@ -57,11 +62,14 @@ public class BlueSlaverAI extends AbstractMonsterAI {
                 player.takeDamage(this, 7);
                 player.addPower(PowerTypeAI.WEAK, 1);
                 break;
+            default:
+                throw new RuntimeException("Invalid move : " + getCurrentMove());
         }
     }
 
     @Override
     public BlueSlaverAI clone() {
-        return new BlueSlaverAI(this);
+        return new BlueSlaverAI(health, block, clonePowers(),
+                new ArrayList<>(moveHistory), rand.copy(), monster);
     }
 }

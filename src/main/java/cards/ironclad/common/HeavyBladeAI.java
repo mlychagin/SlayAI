@@ -9,9 +9,10 @@ import powers.PowerAI;
 
 public class HeavyBladeAI extends AttackCardAI {
 
-    public HeavyBladeAI() {
+    public HeavyBladeAI(boolean upgraded) {
         cardId = CardId.HEAVY_BLADE;
-        cost = 0;
+        this.upgraded = upgraded;
+        cost = 2;
     }
 
     @Override
